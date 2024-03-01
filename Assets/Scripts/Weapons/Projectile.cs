@@ -44,14 +44,21 @@ public class Projectile : MonoBehaviour
     {
         if(other.CompareTag("Enemy"))
         {
-            AIController aIController = other.gameObject.GetComponentInParent<AIController>();
-            aIController?.TakeDamage();
+            if(other.GetType() == typeof(CapsuleCollider))
+            {
+                AIController aIController = other.gameObject.GetComponentInParent<AIController>();
+                aIController?.TakeDamage();
+                Despawn();
+            }
+        }
+        else
+        {
+            if(!other.CompareTag("Player"))
+            {
+                Despawn();
+            }
         }
 
-        if(!other.CompareTag("Player"))
-        {
-            Despawn();
-        }
     }
 
     public virtual void Despawn()

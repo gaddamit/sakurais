@@ -67,7 +67,7 @@ public class AIController : MonoBehaviour
         _currentPatrolPoint = 0;
         _canPatrol = activePatrolPoints > 1;
 
-        _detectionCollider = this.GetComponent<SphereCollider>();
+        _detectionCollider = this._dummy.GetComponent<SphereCollider>();
     }
 
     // Start is called before the first frame update
@@ -213,91 +213,5 @@ public class AIController : MonoBehaviour
     public void TakeDamage()
     {
         Debug.Log("AIController::TakeDamage()");
-    }
-
-    private void OnTriggerEnter( Collider other )
-    {
-        if ( other.tag == "Player" )
-        {
-            _target = other.gameObject;
-            _detectPlayer = StartCoroutine( DetectPlayer() );
-            _playerCollider = other;
-        }
-    }
-
-    private void OnTriggerExit( Collider other )
-    {
-        if ( other.tag == "Player" )
-        {
-            _target = null;
-            StopCoroutine( _detectPlayer );
-            // player is out of range/hidden, fire an event or do something
-        }
-    }
-
-    IEnumerator DetectPlayer()
-    {
-        while ( true )
-        {
-            yield return new WaitForSeconds( _detectionDelay );
-
-            Vector3[] points = GetBoundingPoints( _playerCollider.bounds );
-
-            int points_hidden = 0;
-
-            foreach ( Vector3 point in points )
-            {
-                Vector3 target_direction = point - this.transform.position;
-                float target_distance = Vector3.Distance( this.transform.position, point );
-                float target_angle = Vector3.Angle( target_direction, this.transform.forward );
-
-                if ( IsPointCovered( target_direction, target_distance ) || target_angle > 70 )
-                    ++points_hidden;
-            }
-
-            if ( points_hidden >= points.Length )
-            {
-                // player is hidden
-            }
-            else
-            {
-                // player is visible, do something like attack
-            }
-        }
-    }
-
-    private Vector3[] GetBoundingPoints( Bounds bounds )
-    {
-        Vector3[] bounding_points =
-        {
-            bounds.min,
-            bounds.max,
-            new Vector3( bounds.min.x, bounds.min.y, bounds.max.z ),
-            new Vector3( bounds.min.x, bounds.max.y, bounds.min.z ),
-            new Vector3( bounds.max.x, bounds.min.y, bounds.min.z ),
-            new Vector3( bounds.min.x, bounds.max.y, bounds.max.z ),
-            new Vector3( bounds.max.x, bounds.min.y, bounds.max.z ),
-            new Vector3( bounds.max.x, bounds.max.y, bounds.min.z )
-        };
-
-        return bounding_points;
-    }
-
-    private bool IsPointCovered( Vector3 target_direction, float target_distance )
-    {
-        RaycastHit[] hits = Physics.RaycastAll( this.transform.position, target_direction, _detectionCollider.radius );
-
-        foreach ( RaycastHit hit in hits )
-        {
-            if ( hit.transform.gameObject.layer == LayerMask.NameToLayer( "Cover" ) )
-            {
-                float cover_distance = Vector3.Distance( this.transform.position, hit.point );
-
-                if ( cover_distance < target_distance )
-                    return true;
-            }
-        }
-        
-        return false;
     }
 }

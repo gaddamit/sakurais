@@ -27,6 +27,14 @@ public class PlayerController : MonoBehaviour
     private bool _isGrounded = true;
     private bool _isJumping = false;
     private bool _isSprinting = false;
+    private bool _isDetected = false;
+    private bool _isStrangling = false;
+    private bool _allowStrangling = false;
+    public bool IsDetected
+    {
+        get { return _isDetected; }
+        set { _isDetected = value; }
+    }
 
     [Header("Physics")]
     private Rigidbody _rigidbody;
@@ -82,7 +90,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if(_isAiming || _isThrowing)
+        if(_isAiming || _isThrowing || _isStrangling)
         {
             return;
         }
@@ -227,12 +235,39 @@ public class PlayerController : MonoBehaviour
         _playerAimController.SetCrosshairEnabled(false);
     }
 
+    public void HandleSneakInput()
+    {
+        if(_allowStrangling)
+        {
+            _isStrangling = true;
+            _animatorController.SetAnimationParameter("IsSneaking", true);
+            _allowStrangling = false;
+            Invoke("ResetStrangle", 5f);
+        }
+    }
+
+    private void ResetStrangle()
+    {
+        _animatorController.SetAnimationParameter("IsSneaking", false);
+        _isStrangling = false;
+        _isDetected = false;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             _isGrounded = true;
             _isJumping = false;
+        }
+
+        CapsuleCollider collider = other.GetComponent<CapsuleCollider>();
+        if(other.isTrigger && other.GetType() == typeof(CapsuleCollider))
+        {
+            if(other.gameObject.tag == "Enemy" && !_isDetected)
+            {
+                _allowStrangling = true;
+            }
         }
     }
 
@@ -241,6 +276,10 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             _isGrounded = false;
+        }
+        if(other.gameObject.tag == "Enemy")
+        {
+            _allowStrangling = false;
         }
     }
 }
