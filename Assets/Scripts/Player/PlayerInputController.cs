@@ -20,9 +20,11 @@ public class PlayerInputController : MonoBehaviour
             _playerInput.PlayerActions.Sprint.performed += i => _playerController.HandleSprintInput(true);
             _playerInput.PlayerActions.Sprint.canceled += i => _playerController.HandleSprintInput(false);
             _playerInput.PlayerActions.Jump.started += i => _playerController.HandleJumpInput();
+            _playerInput.PlayerActions.Throw.started += i => _playerController.HandleThrowInput();
+            _playerInput.PlayerActions.Crouch.started += i => _playerController.HandleCrouchInput(true);
+            _playerInput.PlayerActions.Crouch.canceled += i => _playerController.HandleCrouchInput(false);
 
-
-            _playerInput.PlayerMovement.Camera.performed += i => _cameraController.RotateCamera(i.ReadValue<Vector2>());
+            //_playerInput.PlayerMovement.Camera.performed += i => _cameraController.RotateCamera(i.ReadValue<Vector2>());
 
         }
 

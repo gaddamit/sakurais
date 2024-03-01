@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 75d1a675748c24e27be6251c2e36128a
+guid: 69b0fabe79fe14d1a9b891a1717fab84
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Idle
+      name: Crouched Sneaking Right
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 59
+      lastFrame: 33
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

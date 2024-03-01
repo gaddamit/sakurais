@@ -33,6 +33,15 @@ public class PlayerController : MonoBehaviour
     private Vector3 _movementDirection;
     private Transform _cameraTransform;
 
+    [Header("Projectile")]
+    private bool _isThrowing = false;
+    [SerializeField]
+    private Projectile _currentProjectile;
+    [SerializeField]
+    private GameObject _projectileSpawnPoint;
+
+    private bool _isCrouching = false;
+
     private void Awake()
     {
         _animatorController = GetComponent<AnimatorController>();
@@ -124,6 +133,34 @@ public class PlayerController : MonoBehaviour
             _rigidbody.velocity = velocity;
             _isGrounded = false;
         }
+    }
+
+    public void HandleThrowInput()
+    {
+        if(!_isThrowing)
+        {
+            _isThrowing = true;
+            _animatorController.SetAnimationParameter("IsThrowing", _isThrowing);
+            Invoke("PerformThrow", 0.5f);
+            Invoke("ResetThrowing", 0.5f);
+        }
+    }
+
+    public void HandleCrouchInput(bool crouching)
+    {
+        _isCrouching = crouching;
+        _animatorController.SetAnimationParameter("IsCrouching", _isCrouching);
+    }
+
+    private void PerformThrow()
+    {
+        _currentProjectile.Spawn(_projectileSpawnPoint.transform);
+    }
+
+    private void ResetThrowing()
+    {
+        _isThrowing = false;
+        _animatorController.SetAnimationParameter("IsThrowing", false);
     }
 
     private void OnTriggerEnter(Collider other)
