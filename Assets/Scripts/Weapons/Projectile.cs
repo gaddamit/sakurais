@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Cinemachine;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -43,6 +42,12 @@ public class Projectile : MonoBehaviour
 
     public virtual void OnTriggerEnter(Collider other)
     {
+        if(other.CompareTag("Enemy"))
+        {
+            AIController aIController = other.gameObject.GetComponentInParent<AIController>();
+            aIController?.TakeDamage();
+        }
+
         if(!other.CompareTag("Player"))
         {
             Despawn();
