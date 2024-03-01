@@ -21426,10 +21426,6 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.85
       objectReference: {fileID: 0}
-    - target: {fileID: 4483334639745708311, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
-      propertyPath: projectile
-      value: 
-      objectReference: {fileID: 7811684876837366422, guid: b60f624b5672fe04388f9146a8c42af8, type: 3}
     - target: {fileID: 5018749225920014429, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
       propertyPath: ninjaStarSpeed
       value: 20
@@ -21442,8 +21438,7 @@ PrefabInstance:
       propertyPath: ninjaStarSpawnPoint
       value: 
       objectReference: {fileID: 1242089832}
-    m_RemovedComponents:
-    - {fileID: 5018749225920014429, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
 --- !u!4 &1515072670 stripped
 Transform:
