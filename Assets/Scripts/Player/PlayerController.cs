@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     [Header("Projectile")]
     private bool _isThrowing = false;
     [SerializeField]
-    private Projectile _currentProjectile;
+    private GameObject _currentProjectile;
     [SerializeField]
     private GameObject _projectileSpawnPoint;
 
@@ -154,7 +154,9 @@ public class PlayerController : MonoBehaviour
 
     private void PerformThrow()
     {
-        _currentProjectile.Spawn(_projectileSpawnPoint.transform);
+        GameObject projectile = Instantiate(_currentProjectile, _projectileSpawnPoint.transform.position, _currentProjectile.transform.rotation);
+        Projectile projectileScript = projectile.GetComponent<Projectile>(); 
+        projectileScript.Throw(_projectileSpawnPoint.transform);
     }
 
     private void ResetThrowing()

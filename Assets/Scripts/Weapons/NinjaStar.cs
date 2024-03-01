@@ -27,6 +27,7 @@ public class NinjaStar : Projectile
 
     public override void Despawn()
     {
+        Debug.Log("NinjaStar despawned");
         base.Despawn();
     }
 }
