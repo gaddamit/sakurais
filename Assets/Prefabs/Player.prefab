@@ -1145,6 +1145,8 @@ GameObject:
   - component: {fileID: 4435426413394653062}
   - component: {fileID: 4435426413394651258}
   - component: {fileID: 4435426413394653061}
+  - component: {fileID: 4483334639745708311}
+  - component: {fileID: 5018749225920014429}
   - component: {fileID: 4435426413394653060}
   - component: {fileID: 4435426413394653063}
   - component: {fileID: 4435426413394651259}
@@ -1234,6 +1236,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7427065902ea7437cb3cc08c59ada40d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4483334639745708311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3552395639764079313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb000900241e4487f92d7011ff5012bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 15
+  _walkSpeed: 1.5
+  _runSpeed: 5
+  _sprintSpeed: 7
+  _jumpForce: 20
+--- !u!114 &5018749225920014429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3552395639764079313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e12f63e98a045584e82cc2a7dcd53e65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ninjaStarSpawnPoint: {fileID: 0}
+  ninjaStarPrefab: {fileID: 0}
+  ninjaStarSpeed: 10
 --- !u!54 &4435426413394653060
 Rigidbody:
   m_ObjectHideFlags: 0
