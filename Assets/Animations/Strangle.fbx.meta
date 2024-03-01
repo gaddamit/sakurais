@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f7bb00d9246d0e746812f03ad5c55e7a
+guid: d3e045c6da551493eba0042f2ebb9aca
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -19,12 +19,12 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'mixamorig:LeftUpLeg'
-      : position error = 42.120762 mm\n\t'mixamorig:LeftLeg' : position error = 2.158843
-      mm\n\t'mixamorig:LeftFoot' : position error = 18.687206 mm\n\t'mixamorig:LeftToeBase'
-      : position error = 18.218605 mm\n\t'mixamorig:RightUpLeg' : position error
-      = 43.232605 mm\n\t'mixamorig:RightLeg' : position error = 2.365202 mm\n\t'mixamorig:RightFoot'
-      : position error = 19.383383 mm\n\t'mixamorig:RightToeBase' : position error
-      = 8.236562 mm\n"
+      : position error = 6.009550 mm\n\t'mixamorig:LeftLeg' : position error = 6.829194
+      mm\n\t'mixamorig:LeftFoot' : position error = 73.039597 mm\n\t'mixamorig:LeftToeBase'
+      : position error = 39.155960 mm\n\t'mixamorig:RightUpLeg' : position error
+      = 7.878016 mm\n\t'mixamorig:RightLeg' : position error = 7.037556 mm\n\t'mixamorig:RightFoot'
+      : position error = 73.867249 mm\n\t'mixamorig:RightToeBase' : position error
+      = 29.583344 mm\n"
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -40,11 +40,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Firsbee Throw
+      name: Strangle
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 65
-      lastFrame: 198
+      firstFrame: 200
+      lastFrame: 527
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -53,7 +53,7 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 1
+      loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
       keepOriginalOrientation: 1
