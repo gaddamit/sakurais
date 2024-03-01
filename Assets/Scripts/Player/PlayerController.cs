@@ -17,10 +17,16 @@ public class PlayerController : MonoBehaviour
     private float _yMovement;
     private float _movementAmount;
 
+    public Vector2 _move;
+    public Vector2 _look;
+
     [Header("Flags")]
+    private bool _isAiming = false;
+    private bool _isThrowing = false;
+    private bool _isCrouching = false;
     private bool _isGrounded = true;
-    private bool _isJumping;
-    private bool _isSprinting;
+    private bool _isJumping = false;
+    private bool _isSprinting = false;
 
     [Header("Physics")]
     private Rigidbody _rigidbody;
@@ -34,19 +40,25 @@ public class PlayerController : MonoBehaviour
     private Transform _cameraTransform;
 
     [Header("Projectile")]
-    private bool _isThrowing = false;
     [SerializeField]
     private GameObject _currentProjectile;
     [SerializeField]
     private GameObject _projectileSpawnPoint;
 
-    private bool _isCrouching = false;
+    [SerializeField]
+    private GameObject _followTarget;
 
+    [Header("Camera")]
+    [SerializeField]
+    private float _cameraRotationSpeed = 2f;
+
+    private PlayerAimController _playerAimController;
     private void Awake()
     {
         _animatorController = GetComponent<AnimatorController>();
         _rigidbody = GetComponent<Rigidbody>();
         _cameraTransform = Camera.main.transform;
+        _playerAimController = GetComponent<PlayerAimController>();
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -59,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        _animatorController.UpdateMovementValues(_xMovement, _yMovement, _isSprinting);
+        _animatorController.UpdateMovementValues(_xMovement, _yMovement, _isSprinting);    
     }
 
     private void FixedUpdate()
@@ -70,6 +82,11 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
+        if(_isAiming || _isThrowing)
+        {
+            return;
+        }
+
         Vector3 moveDirection = _cameraTransform.forward * _yMovement;
         moveDirection += _cameraTransform.right * _xMovement;
         moveDirection.Normalize();
@@ -79,17 +96,15 @@ public class PlayerController : MonoBehaviour
         {
             moveDirection = moveDirection * _sprintSpeed;
         }
+        else if (_isCrouching)
+        {
+            moveDirection = moveDirection * _walkSpeed;
+        }
         else
         {
-            if (_movementAmount >= 0.5f)
-            {
-                moveDirection = moveDirection * _runSpeed;
-            }
-            else
-            {
-                moveDirection = moveDirection * _walkSpeed;
-            }
+            moveDirection = moveDirection * _runSpeed;
         }
+
         moveDirection.y = _rigidbody.velocity.y;
         _rigidbody.velocity = moveDirection;
     }
@@ -108,6 +123,42 @@ public class PlayerController : MonoBehaviour
         Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
         transform.rotation = playerRotation;
+        if(_followTarget != null)
+        {
+            _followTarget.transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
+        }
+    }
+
+    public void RotateCamera(Vector2 lookInput)
+    {
+        _look = lookInput;
+    }
+
+    private void LateUpdate()
+    {
+        if(_followTarget != null)
+        {
+            _followTarget.transform.rotation *=  Quaternion.AngleAxis(_look.x * _cameraRotationSpeed, Vector3.up);
+        }
+        /*_followTarget.transform.rotation *= Quaternion.AngleAxis(_look.y * _cameraRotationSpeed, Vector3.right);
+
+        Vector3 angles = _followTarget.transform.localEulerAngles;
+        angles.z = 0;
+
+        var angle = _followTarget.transform.localEulerAngles.x;
+
+        //Clamp the Up/Down rotation
+        if (angle > 180 && angle < 340)
+        {
+            angles.x = 340;
+        }
+        else if(angle < 180 && angle > 40)
+        {
+            angles.x = 40;
+        }
+
+
+        _followTarget.transform.localEulerAngles = angles;*/
     }
 
     public void HandleMovementInput(Vector2 movementInput)
@@ -135,14 +186,24 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void HandleThrowInput()
+    public void HandleThrowInput(bool aiming)
     {
-        if(!_isThrowing)
+        if(!_isCrouching && !_isAiming && !_isThrowing)
         {
+            _isAiming = true;
+            _animatorController.SetAnimationParameter("IsAiming", _isAiming);
+            _playerAimController.SetCrosshairEnabled();
+        }
+        else if(_isAiming && !aiming)
+        {
+            _isAiming = false;
+            _animatorController.SetAnimationParameter("IsAiming", _isAiming);
+
             _isThrowing = true;
             _animatorController.SetAnimationParameter("IsThrowing", _isThrowing);
-            Invoke("PerformThrow", 0.5f);
-            Invoke("ResetThrowing", 0.5f);
+
+            Invoke("PerformThrow", 0.25f);
+            Invoke("ResetThrowing", 1.0f);
         }
     }
 
@@ -163,6 +224,7 @@ public class PlayerController : MonoBehaviour
     {
         _isThrowing = false;
         _animatorController.SetAnimationParameter("IsThrowing", false);
+        _playerAimController.SetCrosshairEnabled(false);
     }
 
     private void OnTriggerEnter(Collider other)

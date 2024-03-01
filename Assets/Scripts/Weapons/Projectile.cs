@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Cinemachine;
 using UnityEditor.SearchService;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private float _projectileDeathTime = 3;
 
+
+    private CinemachineImpulseSource _impulseSource;
     // Start is called before the first frame update
     private void Start()
     {
@@ -32,12 +36,13 @@ public class Projectile : MonoBehaviour
     public void Throw(Transform spawnLocation)
     {
         gameObject.GetComponent<Rigidbody>().velocity = spawnLocation.forward * _projectileSpeed;
+        _impulseSource = gameObject.GetComponent<CinemachineImpulseSource>();
+        _impulseSource.GenerateImpulse(Camera.main.transform.forward);
         Invoke("Despawn", _projectileDeathTime);
     }
 
     public virtual void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Projectile hit: " + other.name);
         if(!other.CompareTag("Player"))
         {
             Despawn();

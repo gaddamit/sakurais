@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class NinjaStar : Projectile
 {
+    [SerializeField]
+    private float _rotationSpeed = 5.0f;
+    [SerializeField]
+    private Vector3 _rotationDirection = new Vector3(0, 0, 0);
     private void Start()
     {
 
@@ -12,7 +16,7 @@ public class NinjaStar : Projectile
 
     private void Update()
     {
-
+        transform.Rotate(_rotationDirection, 100 * _rotationSpeed * Time.deltaTime);
     }
 
     public override void Spawn(Transform spawnLocation)
@@ -27,7 +31,6 @@ public class NinjaStar : Projectile
 
     public override void Despawn()
     {
-        Debug.Log("NinjaStar despawned");
         base.Despawn();
     }
 }
