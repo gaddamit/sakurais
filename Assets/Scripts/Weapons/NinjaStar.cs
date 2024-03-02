@@ -19,9 +19,9 @@ public class NinjaStar : Projectile
         transform.Rotate(_rotationDirection, 100 * _rotationSpeed * Time.deltaTime);
     }
 
-    public override void Spawn(Transform spawnLocation)
+    public override void Throw(Transform spawnLocation)
     {
-        base.Spawn(spawnLocation);
+        base.Throw(spawnLocation);
     }
 
     public override void OnTriggerEnter(Collider other)

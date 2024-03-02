@@ -6,11 +6,11 @@ public class PlayerAimController : MonoBehaviour
 {
     [SerializeField]
     private GameObject _crossHair;
-
     [SerializeField]
     private GameObject _cameraDefault;
     [SerializeField]
     private GameObject _cameraAiming;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +23,7 @@ public class PlayerAimController : MonoBehaviour
         
     }
 
+    // Enable or disable crosshair
     public void SetCrosshairEnabled(bool show = true)
     {
         if(show)
@@ -38,6 +39,8 @@ public class PlayerAimController : MonoBehaviour
             StartCoroutine(ShowCrossHair(false));
         }
     }
+
+    // Show crosshair after a delay
     IEnumerator ShowCrossHair(bool show = true)
     {
         yield return new WaitForSeconds(0.5f);

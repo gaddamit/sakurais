@@ -11,8 +11,8 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private float _projectileDeathTime = 3;
 
-
     private CinemachineImpulseSource _impulseSource;
+    
     // Start is called before the first frame update
     private void Start()
     {
@@ -24,15 +24,8 @@ public class Projectile : MonoBehaviour
     {
         
     }
-
-    public virtual void Spawn(Transform spawnLocation)
-    {
-        GameObject projectile = Instantiate(this.gameObject, spawnLocation.position, this.gameObject.transform.rotation); 
-        projectile.GetComponent<Rigidbody>().velocity = spawnLocation.forward * _projectileSpeed;
-        Invoke("Despawn", _projectileDeathTime);
-    }
-
-    public void Throw(Transform spawnLocation)
+ 
+    public virtual void Throw(Transform spawnLocation)
     {
         gameObject.GetComponent<Rigidbody>().velocity = spawnLocation.forward * _projectileSpeed;
         _impulseSource = gameObject.GetComponent<CinemachineImpulseSource>();
@@ -58,7 +51,6 @@ public class Projectile : MonoBehaviour
                 Despawn();
             }
         }
-
     }
 
     public virtual void Despawn()

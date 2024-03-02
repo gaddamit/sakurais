@@ -136,15 +136,6 @@ public class AIController : MonoBehaviour
             default:
                 break;
         }
-/*
-        if(_state != _prevState)
-        {
-            string animation = _animations[(int)_state];
-            if(!string.IsNullOrEmpty(animation))
-            {
-                _prevState = _state;
-            }
-        }*/
     }
 
     private bool IsWithinDistance(GameObject gameObject, float distanceCheck)
@@ -184,7 +175,7 @@ public class AIController : MonoBehaviour
 
         _animator?.SetBool("IsWalking", true);
         SetDestination(_patrolPoints[_currentPatrolPoint]);
-        if(IsWithinDistance(_patrolPoints[_currentPatrolPoint], 1f))
+        if(IsWithinDistance(_patrolPoints[_currentPatrolPoint], 0.5f))
         {
             _currentPatrolPoint++;
             _currentPatrolPoint %= _patrolPoints.Length;
@@ -212,6 +203,6 @@ public class AIController : MonoBehaviour
 
     public void TakeDamage()
     {
-        Debug.Log("AIController::TakeDamage()");
+        Debug.Log("AIController::TakeDamage() " + gameObject.name);
     }
 }

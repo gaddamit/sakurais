@@ -131,10 +131,7 @@ public class PlayerController : MonoBehaviour
         Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
         transform.rotation = playerRotation;
-        if(_followTarget != null)
-        {
-            _followTarget.transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
-        }
+        _followTarget.transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
     }
 
     public void RotateCamera(Vector2 lookInput)
@@ -144,10 +141,7 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(_followTarget != null)
-        {
-            _followTarget.transform.rotation *=  Quaternion.AngleAxis(_look.x * _cameraRotationSpeed, Vector3.up);
-        }
+        _followTarget.transform.rotation *=  Quaternion.AngleAxis(_look.x * _cameraRotationSpeed, Vector3.up);
         /*_followTarget.transform.rotation *= Quaternion.AngleAxis(_look.y * _cameraRotationSpeed, Vector3.right);
 
         Vector3 angles = _followTarget.transform.localEulerAngles;
