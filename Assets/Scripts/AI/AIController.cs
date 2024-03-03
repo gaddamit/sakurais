@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -36,20 +37,18 @@ public class AIController : MonoBehaviour
     private GameObject _dummy;
     [SerializeField]
     private string[] _animations;
+
+    //Requires at least 2 patrol points assigned to be able to patrol
+    private bool _canPatrol = false;
+
+    [Header("Patrol")]
+    [SerializeField]
+    private float _patrolWait = 5.0f;
     [SerializeField]
     private GameObject[] _patrolPoints;
     private int _currentPatrolPoint = -1;
+    private Coroutine _patrolCoroutine = null;
 
-    private bool _canPatrol = false;
-    private bool _isPatrolling = false;
-
-    private GameObject _target;
-
-    private Coroutine _detectPlayer;
-    private Collider _playerCollider;
-    [SerializeField]
-    private float _detectionDelay = 0.5f;
-    private SphereCollider _detectionCollider;
     private void Awake()
     {
         _state = AIState.IDLE;
@@ -66,8 +65,6 @@ public class AIController : MonoBehaviour
 
         _currentPatrolPoint = 0;
         _canPatrol = activePatrolPoints > 1;
-
-        _detectionCollider = this._dummy.GetComponent<SphereCollider>();
     }
 
     // Start is called before the first frame update
@@ -84,33 +81,6 @@ public class AIController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_state == AIState.DEAD)
-        {
-            return;
-        }
-
-        if(_beginDeath)
-        {
-            _state = AIState.DIE;
-        }
-        else
-        {
-            _state = AIState.IDLE;
-
-            if(_canPatrol && _isPatrolling)
-            {
-                _state = AIState.PATROL;
-            }
-            if(IsWithinDistance(_targetObject, _distanceToChase))
-            {
-                _state = AIState.CHASE;
-            }
-            if(IsWithinDistance(_targetObject, _distanceToAttack))
-            {
-                _state = AIState.ATTACK;
-            }
-        }
-
         PerformAIActions();
     }
 
@@ -138,29 +108,33 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private bool IsWithinDistance(GameObject gameObject, float distanceCheck)
+    private bool IsWithinDistance()
     {
-        if(gameObject == null)
-        {
-            return false;
-        }
-        
-        float distance = Vector3.Distance(_dummy.transform.position, gameObject.transform.position);
-        return distance < distanceCheck; 
+        return _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance;
     }
 
     private void Idle()
     {
-        _navMeshAgent.SetDestination(_dummy.transform.position);
-        _animator?.SetBool("IsWalking", false);
-        StartCoroutine(StartPatrol());
+        if(_canPatrol)
+        {
+            if(_patrolCoroutine == null)
+            {
+                _patrolCoroutine = StartCoroutine(StartPatrol());
+            }
+        }
     }
     
     IEnumerator StartPatrol()
     {
-        yield return new WaitForSeconds(5.0f);
-        _isPatrolling = true;
+        yield return new WaitForSeconds(_patrolWait);
+
+        _animator?.SetBool("IsWalking", true);
+        SetDestination(_patrolPoints[_currentPatrolPoint]);
+        _state = AIState.PATROL;
+
+        _patrolCoroutine = null;
     }
+
     private void Chase()
     {
         SetDestination(_targetObject);
@@ -168,20 +142,13 @@ public class AIController : MonoBehaviour
 
     private void Patrol()
     {
-        if(_currentPatrolPoint < 0)
-        {
-            return;
-        }
-
-        _animator?.SetBool("IsWalking", true);
-        SetDestination(_patrolPoints[_currentPatrolPoint]);
-        if(IsWithinDistance(_patrolPoints[_currentPatrolPoint], 0.5f))
+        if(IsWithinDistance())
         {
             _currentPatrolPoint++;
             _currentPatrolPoint %= _patrolPoints.Length;
-            _isPatrolling = false;
+            
+            _animator?.SetBool("IsWalking", false);
             _state = AIState.IDLE;
-            _navMeshAgent.SetDestination(_navMeshAgent.gameObject.transform.position);
         }
     }
 
