@@ -62,28 +62,13 @@ public class PlayerController : MonoBehaviour
 
     private PlayerAimController _playerAimController;
 
-    [Header("Step Climb")]
-    [SerializeField]
-    private GameObject _stepRayUpper;
-    [SerializeField]
-    private GameObject _stepRayLower;
-    [SerializeField]
-    private float _stepHeight = 0.3f;
-    [SerializeField]
-    private float _stepSmooth = 0.1f;
-    [SerializeField]
-    private bool _debugStepClimbRays = true;
-
     private void Awake()
     {
         _animatorController = GetComponent<AnimatorController>();
         _rigidbody = GetComponent<Rigidbody>();
         _cameraTransform = Camera.main.transform;
         _playerAimController = GetComponent<PlayerAimController>();
-
-        //Set the step ray positions
-        _stepRayUpper.transform.position = new Vector3(_stepRayUpper.transform.position.x, _stepHeight, _stepRayUpper.transform.position.z);
-
+        
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
@@ -102,7 +87,6 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovement();
         HandleRotation();
-        HandleStepClimb();
     }
 
     private void HandleMovement()
@@ -291,42 +275,6 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.tag == "Enemy")
         {
             _allowStrangling = false;
-        }
-    }
-
-    private void HandleStepClimb()
-    {
-        RaycastHit hitLower;
-        Debug.DrawRay(_stepRayLower.transform.position, transform.TransformDirection(Vector3.forward) * 0.2f, Color.red);
-        Debug.DrawRay(_stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward) * 0.2f, Color.red);
-        if(Physics.Raycast(_stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, 0.15f))
-        {
-            RaycastHit hitUpper;
-            if(Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, 0.20f))
-            {
-                _rigidbody.position -= new Vector3(0, -_stepSmooth, 0);
-            }
-        }
-
-
-        RaycastHit hitLower45;
-        if(Physics.Raycast(_stepRayLower.transform.position, transform.TransformDirection(1.5f,0,1), out hitLower45, 0.1f))
-        {
-            RaycastHit hitUpper45;
-            if(Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(1.5f,0,1), out hitUpper45, 0.20f))
-            {
-                _rigidbody.position -= new Vector3(0, -_stepSmooth, 0);
-            }
-        }
-
-        RaycastHit hitLowerMinus45;
-        if(Physics.Raycast(_stepRayLower.transform.position, transform.TransformDirection(-1.5f,0,1), out hitLowerMinus45, 0.1f))
-        {
-            RaycastHit hitUpperMinus45;
-            if(Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(-1.5f,0,1), out hitUpperMinus45, 0.20f))
-            {
-                _rigidbody.position -= new Vector3(0, -_stepSmooth, 0);
-            }
         }
     }
 }
