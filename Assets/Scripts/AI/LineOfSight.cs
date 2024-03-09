@@ -41,6 +41,7 @@ public class LineOfSight : MonoBehaviour
         }
     }
 
+    // Detects if the player is in the line of sight of the AI
     IEnumerator DetectPlayer()
     {
         while ( _target != null )
@@ -79,7 +80,9 @@ public class LineOfSight : MonoBehaviour
             }
         }
     }
-
+    
+    // Checks if a point is covered by an object
+    // If the point is covered, the player is not in the line of sight
     private bool IsPointCovered( Vector3 target_direction, float target_distance )
     {
         RaycastHit[] hits = Physics.RaycastAll( this.transform.position, target_direction, _detectionCollider.radius );
@@ -100,6 +103,8 @@ public class LineOfSight : MonoBehaviour
         return false;
     }
 
+
+    // Returns the 8 bounding points of a collider
     private Vector3[] GetBoundingPoints( Bounds bounds )
     {
         Vector3[] bounding_points =
