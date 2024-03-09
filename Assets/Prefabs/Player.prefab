@@ -402,6 +402,7 @@ GameObject:
   - component: {fileID: 1707301805223682649}
   - component: {fileID: 1707301805223683493}
   - component: {fileID: 3043379056703641705}
+  - component: {fileID: 1409071673916437803}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -474,10 +475,6 @@ MonoBehaviour:
   _projectileSpawnPoint: {fileID: 3043379056528500772}
   _followTarget: {fileID: 3043379058134534705}
   _cameraRotationSpeed: 2
-  _stepRayUpper: {fileID: 0}
-  _stepRayLower: {fileID: 0}
-  _stepHeight: 0.5
-  _stepSmooth: 0.1
 --- !u!114 &1707301805223683492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,6 +557,25 @@ MonoBehaviour:
   _crossHair: {fileID: 0}
   _cameraDefault: {fileID: 0}
   _cameraAiming: {fileID: 0}
+--- !u!114 &1409071673916437803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977331079093198607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6345744ab642a402b9a1efece22dccd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stepRayUpper: {fileID: 7177591387604339715}
+  _stepRayUpperLength: 0.2
+  _stepRayLower: {fileID: 2452660445686949531}
+  _stepRayLowerLength: 0.1
+  _stepHeight: 0.3
+  _stepSmooth: 0.01
+  _debugStepClimbRays: 1
 --- !u!1 &2330321860763948838
 GameObject:
   m_ObjectHideFlags: 0
