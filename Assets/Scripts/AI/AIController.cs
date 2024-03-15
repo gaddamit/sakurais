@@ -63,7 +63,7 @@ public class AIController : MonoBehaviour
             }
         }
 
-        _currentPatrolPoint = 0;
+        _currentPatrolPoint = 1;
         _canPatrol = activePatrolPoints > 1;
     }
 
@@ -142,7 +142,7 @@ public class AIController : MonoBehaviour
 
     private void Patrol()
     {
-        if(IsWithinDistance())
+        if(IsWithinDistance() && !_navMeshAgent.pathPending)
         {
             _currentPatrolPoint++;
             _currentPatrolPoint %= _patrolPoints.Length;
