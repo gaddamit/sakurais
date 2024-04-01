@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 22c492317087847cb8cca043ce24b593
+guid: 4f5b7c93d1bb5483abb0bd8a5030f641
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,13 +33,13 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Stab2
+      name: Stab4
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 71
+      lastFrame: 64
       wrapMode: 0
-      orientationOffsetY: 6.87
+      orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
