@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8457187086035898218}
   - component: {fileID: 7811684876837366422}
   - component: {fileID: -8058841700898781090}
+  - component: {fileID: 1112346668851883913}
   m_Layer: 0
   m_Name: NinjaStar
   m_TagString: Projectile
@@ -138,6 +139,20 @@ MonoBehaviour:
     m_DissipationDistance: 100
     m_PropagationSpeed: 343
   m_DefaultVelocity: {x: 0, y: -1, z: 0}
+--- !u!114 &1112346668851883913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137139717624334454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1023e1108e0c64aacc202bfeef9605, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pHealth: {fileID: 0}
+  _damage: 25
 --- !u!1 &3138422635462809066
 GameObject:
   m_ObjectHideFlags: 0
