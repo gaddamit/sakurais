@@ -82,8 +82,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e12f63e98a045584e82cc2a7dcd53e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _projectileSpeed: 20
-  _projectileDeathTime: 3
+  _projectileSpeed: 30
+  _projectileDeathTime: 2
   _rotationSpeed: 10
   _rotationDirection: {x: 0, y: 0, z: 1}
 --- !u!114 &-8058841700898781090

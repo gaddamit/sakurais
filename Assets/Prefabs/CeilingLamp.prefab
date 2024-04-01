@@ -131,8 +131,8 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3438381040350173774}
-  - {fileID: 7975762602271373940}
   - {fileID: 2937439573656587329}
+  - {fileID: 7975762602271373940}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -212,8 +212,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2028f7630c1bf4200835143661399997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _light: {fileID: 2368156732745879540}
-  _bulbLight: {fileID: 1396591565570654953}
+  _light: {fileID: 3483004625101630308}
+  _bulbLight: {fileID: 7067275553314213281}
 --- !u!1 &3483004625101630308
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 509979794364412691}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &2368156732745879540
 Light:
@@ -338,7 +338,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 509979794364412691}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1396591565570654953
 Light:
