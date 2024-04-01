@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour
  
     public virtual void Throw(Transform spawnLocation)
     {
-        gameObject.GetComponent<Rigidbody>().velocity = spawnLocation.forward * _projectileSpeed;
+        gameObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * _projectileSpeed;
         _impulseSource = gameObject.GetComponent<CinemachineImpulseSource>();
         _impulseSource.GenerateImpulse(Camera.main.transform.forward);
         Invoke("Despawn", _projectileDeathTime);

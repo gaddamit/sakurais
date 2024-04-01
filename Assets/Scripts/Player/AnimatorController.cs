@@ -65,4 +65,10 @@ public class AnimatorController : MonoBehaviour
     {
         _animator.SetTrigger(triggerName);
     }
+
+
+    public void ResetTrigger(string triggerName)
+    {
+        _animator.ResetTrigger(triggerName);
+    }
 }

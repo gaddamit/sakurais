@@ -10,7 +10,7 @@ public class PlayerAimController : MonoBehaviour
     private GameObject _cameraDefault;
     [SerializeField]
     private GameObject _cameraAiming;
-
+    private bool _adjustCamera = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,21 +23,21 @@ public class PlayerAimController : MonoBehaviour
         
     }
 
-    // Enable or disable crosshair
-    public void SetCrosshairEnabled(bool show = true)
+    public void StartAiming()
     {
-        if(show)
-        {
-            _cameraDefault.SetActive(false);
-            _cameraAiming.SetActive(true);
-            StartCoroutine(ShowCrossHair());
-        }
-        else
-        {
-            _cameraDefault.SetActive(true);
-            _cameraAiming.SetActive(false);
-            StartCoroutine(ShowCrossHair(false));
-        }
+        _adjustCamera = true;
+        _cameraDefault.SetActive(false);
+        _cameraAiming.SetActive(true);
+        
+        StartCoroutine(ShowCrossHair(true));
+    }
+
+    public void StopAiming()
+    {
+        _cameraDefault.SetActive(true);
+        _cameraAiming.SetActive(false);
+        
+        StartCoroutine(ShowCrossHair(false));
     }
 
     // Show crosshair after a delay
@@ -45,5 +45,13 @@ public class PlayerAimController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         _crossHair.SetActive(show);
+    }
+
+    private void LateUpdate()
+    {
+        if (_adjustCamera)
+        {
+            _adjustCamera = false;
+        }
     }
 }

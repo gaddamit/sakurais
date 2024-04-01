@@ -61,6 +61,12 @@ public class PlayerController : MonoBehaviour
     private float _cameraRotationSpeed = 2f;
 
     private PlayerAimController _playerAimController;
+    
+    public Vector3 nextPosition;
+    public Quaternion nextRotation;
+
+    public float rotationPower = 3f;
+    public float rotationLerp = 0.5f;
 
     private void Awake()
     {
@@ -129,10 +135,10 @@ public class PlayerController : MonoBehaviour
             targetDirection = transform.forward;
             
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
+        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _cameraRotationSpeed * Time.deltaTime);
 
         transform.rotation = playerRotation;
-        _followTarget.transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
+        //_followTarget.transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
     }
 
     public void RotateCamera(Vector2 lookInput)
@@ -142,13 +148,13 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        _followTarget.transform.rotation *=  Quaternion.AngleAxis(_look.x * _cameraRotationSpeed, Vector3.up);
-        /*_followTarget.transform.rotation *= Quaternion.AngleAxis(_look.y * _cameraRotationSpeed, Vector3.right);
+        _followTarget.transform.rotation *= Quaternion.AngleAxis(_look.x * _cameraRotationSpeed, Vector3.up);
+        _followTarget.transform.rotation *= Quaternion.AngleAxis(_look.y * _cameraRotationSpeed, Vector3.right);
 
         Vector3 angles = _followTarget.transform.localEulerAngles;
         angles.z = 0;
 
-        var angle = _followTarget.transform.localEulerAngles.x;
+        float angle = _followTarget.transform.localEulerAngles.x;
 
         //Clamp the Up/Down rotation
         if (angle > 180 && angle < 340)
@@ -161,7 +167,35 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        _followTarget.transform.localEulerAngles = angles;*/
+        _followTarget.transform.localEulerAngles = angles;
+
+        nextRotation = Quaternion.Lerp(_followTarget.transform.rotation, nextRotation, Time.deltaTime * rotationLerp);
+
+        float moveSpeed = _walkSpeed / 100f;
+        Vector3 position = (transform.forward * _move.y * moveSpeed) + (transform.right * _move.x * moveSpeed);
+        nextPosition = transform.position + position;        
+        
+
+        if (_move.x == 0 && _move.y == 0) 
+        {   
+            nextPosition = transform.position;
+
+            if (_isAiming)
+            {
+                //Set the player rotation based on the look transform
+                transform.rotation = Quaternion.Euler(0, _followTarget.transform.rotation.eulerAngles.y, 0);
+                //reset the y rotation of the look transform
+                _followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+            }
+
+            return; 
+        }
+
+        //Set the player rotation based on the look transform
+        transform.rotation = Quaternion.Euler(0, _followTarget.transform.rotation.eulerAngles.y, 0);
+        //reset the y rotation of the look transform
+        _followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+        return;
     }
 
     public void HandleMovementInput(Vector2 movementInput)
@@ -179,13 +213,15 @@ public class PlayerController : MonoBehaviour
 
     public void HandleJumpInput()
     {
-        if(_isGrounded)
+        if(_isGrounded && !_isJumping && !_isCrouching && !_isAiming && !_isThrowing && !_isStrangling)
         {
             _isJumping = true;
             Vector3 velocity = _rigidbody.velocity;
             velocity.y = _jumpForce;
             _rigidbody.velocity = velocity;
             _isGrounded = false;
+            _animatorController.SetTrigger("Jump");
+            _animatorController.SetAnimationParameter("IsGrounded", false);
         }
     }
 
@@ -195,7 +231,7 @@ public class PlayerController : MonoBehaviour
         {
             _isAiming = true;
             _animatorController.SetAnimationParameter("IsAiming", _isAiming);
-            _playerAimController.SetCrosshairEnabled();
+            _playerAimController.StartAiming();
         }
         else if(_isAiming && !aiming)
         {
@@ -227,7 +263,7 @@ public class PlayerController : MonoBehaviour
     {
         _isThrowing = false;
         _animatorController.SetAnimationParameter("IsThrowing", false);
-        _playerAimController.SetCrosshairEnabled(false);
+        _playerAimController.StopAiming();
     }
 
     public void HandleSneakInput()
@@ -250,10 +286,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("test");
         if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            Debug.Log("Grounded");
             _isGrounded = true;
             _isJumping = false;
+            _animatorController.SetAnimationParameter("IsGrounded", true);
+
+            _animatorController.ResetTrigger("Jump");
         }
 
         CapsuleCollider collider = other.GetComponent<CapsuleCollider>();
