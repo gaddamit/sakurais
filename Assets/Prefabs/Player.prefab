@@ -465,16 +465,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 5
-  _walkSpeed: 1.5
-  _runSpeed: 2
-  _sprintSpeed: 7
+  _walkSpeed: 2.5
+  _runSpeed: 6
+  _sprintSpeed: 8
   _move: {x: 0, y: 0}
   _look: {x: 0, y: 0}
-  _jumpForce: 5
+  _jumpForce: 6
   _currentProjectile: {fileID: 2137139717624334454, guid: b60f624b5672fe04388f9146a8c42af8, type: 3}
   _projectileSpawnPoint: {fileID: 3043379056528500772}
   _followTarget: {fileID: 3043379058134534705}
   _cameraRotationSpeed: 2
+  nextPosition: {x: 0, y: 0, z: 0}
+  nextRotation: {x: 0, y: 0, z: 0, w: 0}
+  rotationPower: 3
+  rotationLerp: 0.5
 --- !u!114 &1707301805223683492
 MonoBehaviour:
   m_ObjectHideFlags: 0

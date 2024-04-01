@@ -25566,28 +25566,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1707301805223682648, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
-      propertyPath: _runSpeed
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1707301805223682648, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
-      propertyPath: _jumpForce
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1707301805223682648, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
-      propertyPath: _walkSpeed
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1707301805223682648, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
       propertyPath: _stepHeight
       value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1707301805223682648, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
       propertyPath: _stepSmooth
       value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 1707301805223682648, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
-      propertyPath: _sprintSpeed
-      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1707301805223682648, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
       propertyPath: _stepRayLower
