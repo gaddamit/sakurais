@@ -24,7 +24,6 @@ public class LineOfSight : MonoBehaviour
     {
         if ( other.tag == "Player" )
         {
-            Debug.Log( "Player entered" );
             _target = other.gameObject;
             _detectPlayerCoroutine = StartCoroutine( DetectPlayer() );
             _targetCollider = other.gameObject.GetComponent<CapsuleCollider>();
@@ -35,7 +34,6 @@ public class LineOfSight : MonoBehaviour
     {
         if ( other.tag == "Player" )
         {
-            Debug.Log( "Player exited" );
             _target = null;
             StopCoroutine( _detectPlayerCoroutine );
         }
