@@ -5,10 +5,9 @@ using UnityEngine.Experimental.GlobalIllumination;
 
 public class Lamp : MonoBehaviour
 {
-    [SerializeField]
-    private Light _light;
-    [SerializeField]
-    private Light _bulbLight;
+    [SerializeField] private GameObject _light;
+    [SerializeField] private GameObject _bulbLight;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,14 +25,15 @@ public class Lamp : MonoBehaviour
         Debug.Log("Lamp OnTriggerEnter");
         if (other.CompareTag("Projectile"))
         {
+            Debug.Log("Lamp OnTriggerEnter Projectile");
             if(_light != null)
             {
-                _light.enabled = false;
+                _light.SetActive(false);
             }
-
+            
             if(_bulbLight != null)
             {
-                _bulbLight.enabled = false;
+                _bulbLight.SetActive(false);
             }
         }
     }
