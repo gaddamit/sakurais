@@ -156,7 +156,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Sneak"",
+                    ""name"": ""Stab"",
                     ""type"": ""Button"",
                     ""id"": ""a69ecac0-a54d-4933-ab0a-c0a552999652"",
                     ""expectedControlType"": ""Button"",
@@ -217,7 +217,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Sneak"",
+                    ""action"": ""Stab"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -236,7 +236,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_Jump = m_PlayerActions.FindAction("Jump", throwIfNotFound: true);
         m_PlayerActions_Crouch = m_PlayerActions.FindAction("Crouch", throwIfNotFound: true);
         m_PlayerActions_Throw = m_PlayerActions.FindAction("Throw", throwIfNotFound: true);
-        m_PlayerActions_Sneak = m_PlayerActions.FindAction("Sneak", throwIfNotFound: true);
+        m_PlayerActions_Stab = m_PlayerActions.FindAction("Stab", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -356,7 +356,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Jump;
     private readonly InputAction m_PlayerActions_Crouch;
     private readonly InputAction m_PlayerActions_Throw;
-    private readonly InputAction m_PlayerActions_Sneak;
+    private readonly InputAction m_PlayerActions_Stab;
     public struct PlayerActionsActions
     {
         private @PlayerInput m_Wrapper;
@@ -365,7 +365,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlayerActions_Jump;
         public InputAction @Crouch => m_Wrapper.m_PlayerActions_Crouch;
         public InputAction @Throw => m_Wrapper.m_PlayerActions_Throw;
-        public InputAction @Sneak => m_Wrapper.m_PlayerActions_Sneak;
+        public InputAction @Stab => m_Wrapper.m_PlayerActions_Stab;
         public InputActionMap Get() { return m_Wrapper.m_PlayerActions; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -387,9 +387,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Throw.started += instance.OnThrow;
             @Throw.performed += instance.OnThrow;
             @Throw.canceled += instance.OnThrow;
-            @Sneak.started += instance.OnSneak;
-            @Sneak.performed += instance.OnSneak;
-            @Sneak.canceled += instance.OnSneak;
+            @Stab.started += instance.OnStab;
+            @Stab.performed += instance.OnStab;
+            @Stab.canceled += instance.OnStab;
         }
 
         private void UnregisterCallbacks(IPlayerActionsActions instance)
@@ -406,9 +406,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Throw.started -= instance.OnThrow;
             @Throw.performed -= instance.OnThrow;
             @Throw.canceled -= instance.OnThrow;
-            @Sneak.started -= instance.OnSneak;
-            @Sneak.performed -= instance.OnSneak;
-            @Sneak.canceled -= instance.OnSneak;
+            @Stab.started -= instance.OnStab;
+            @Stab.performed -= instance.OnStab;
+            @Stab.canceled -= instance.OnStab;
         }
 
         public void RemoveCallbacks(IPlayerActionsActions instance)
@@ -437,6 +437,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
-        void OnSneak(InputAction.CallbackContext context);
+        void OnStab(InputAction.CallbackContext context);
     }
 }

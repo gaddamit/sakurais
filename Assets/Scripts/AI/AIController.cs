@@ -10,7 +10,7 @@ enum AIState
     PATROL,
     CHASE,
     ATTACK,
-    DIE,
+    DYING,
     DEAD
 };
 
@@ -49,6 +49,9 @@ public class AIController : MonoBehaviour
     private int _currentPatrolPoint = -1;
     private Coroutine _patrolCoroutine = null;
 
+    PlayerHealth _playerHealth;
+    [SerializeField]
+    private Collider _bodyCollider;
     private void Awake()
     {
         _state = AIState.IDLE;
@@ -70,6 +73,9 @@ public class AIController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        _playerHealth = GetComponent<PlayerHealth>();
+        _playerHealth.onPlayerDeathDelegate += StartDeath;
+
         PerformAIActions();
     }
 
@@ -100,8 +106,10 @@ public class AIController : MonoBehaviour
             case AIState.ATTACK:
                 Attack();
                 break;
-            case AIState.DIE:
+            case AIState.DYING:
                 Die();
+                break;
+            case AIState.DEAD:
                 break;
             default:
                 break;
@@ -159,7 +167,8 @@ public class AIController : MonoBehaviour
 
     private void Die()
     {
-        SetDestination(_dummy.gameObject);
+        _bodyCollider.enabled = false;
+        StopMovement();
         Invoke("HideEnemy", _deathAnimationTime);
     }
 
@@ -168,8 +177,30 @@ public class AIController : MonoBehaviour
         _navMeshAgent.destination = destinationObject.transform.position;
     }
 
+    private void StopMovement()
+    {
+        _navMeshAgent.isStopped = true;
+    }
+
     public void TakeDamage()
     {
         Debug.Log("AIController::TakeDamage() " + gameObject.name);
+    }
+
+    private void StartDeath()
+    {
+        Debug.Log("Start death");
+        _animator.SetTrigger("Dying");
+        _state = AIState.DYING;
+    }
+
+    private void HideEnemy()
+    {   
+        transform.parent.gameObject.SetActive(false);
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        
     }
 }

@@ -134,7 +134,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sneak",
+                    "name": "Stab",
                     "type": "Button",
                     "id": "a69ecac0-a54d-4933-ab0a-c0a552999652",
                     "expectedControlType": "Button",
@@ -195,7 +195,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Sneak",
+                    "action": "Stab",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
