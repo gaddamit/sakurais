@@ -20,12 +20,11 @@ public class Lamp : MonoBehaviour
         
     }
 
+    // Turn off the light when the projectile hits the lamp
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Lamp OnTriggerEnter");
         if (other.CompareTag("Projectile"))
         {
-            Debug.Log("Lamp OnTriggerEnter Projectile");
             if(_light != null)
             {
                 _light.SetActive(false);

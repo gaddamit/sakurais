@@ -8,6 +8,7 @@ public class PlayerInputController : MonoBehaviour
 
     private PlayerInput _playerInput;
 
+    // Bind all input actions
     private void OnEnable()
     {
         _playerController = GetComponent<PlayerController>();

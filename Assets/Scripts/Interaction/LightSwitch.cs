@@ -20,6 +20,8 @@ public class Light : MonoBehaviour
             }
         }
     }
+
+    
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Player")

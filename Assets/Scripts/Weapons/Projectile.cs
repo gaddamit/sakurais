@@ -25,11 +25,15 @@ public class Projectile : MonoBehaviour
         
     }
  
+    // Throw the projectile
     public virtual void Throw(Transform spawnLocation)
     {
         gameObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * _projectileSpeed;
+
+        // Add impulse to the camera as an effect
         _impulseSource = gameObject.GetComponent<CinemachineImpulseSource>();
         _impulseSource.GenerateImpulse(Camera.main.transform.forward);
+
         Invoke("Despawn", _projectileDeathTime);
     }
 
@@ -39,14 +43,17 @@ public class Projectile : MonoBehaviour
         {
             if(other.GetType() == typeof(CapsuleCollider))
             {
+                //Apply damage to the receiving object
                 PlayerHealth playerHealth = other.gameObject.GetComponentInParent<PlayerHealth>();
                 Damage damage = gameObject.GetComponent<Damage>();
                 playerHealth.ApplyDamage(damage.DamageAmount);
+
                 Despawn();
             }
         }
         else
         {
+            // Despawn the projectile if it hits anything other than the player or a weapon
             if(!other.CompareTag("Player") && !other.CompareTag("Weapon"))
             {
                 Despawn();
@@ -54,6 +61,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    // Despawn the projectile
     public virtual void Despawn()
     {
         CancelInvoke();

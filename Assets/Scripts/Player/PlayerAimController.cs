@@ -11,6 +11,7 @@ public class PlayerAimController : MonoBehaviour
     [SerializeField]
     private GameObject _cameraAiming;
     private bool _adjustCamera = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +24,7 @@ public class PlayerAimController : MonoBehaviour
         
     }
 
+    // Switch to aiming camera
     public void StartAiming()
     {
         _adjustCamera = true;
@@ -32,6 +34,7 @@ public class PlayerAimController : MonoBehaviour
         StartCoroutine(ShowCrossHair(true));
     }
 
+    // Switch to default camera
     public void StopAiming()
     {
         _cameraDefault.SetActive(true);

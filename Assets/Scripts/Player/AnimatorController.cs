@@ -20,6 +20,7 @@ public class AnimatorController : MonoBehaviour
         
     }
 
+    // Update the movement values of the player
     public void UpdateMovementValues(float xMovement, float yMovement, bool isSprinting = false)
     {
         float snappedX = SnapValues(xMovement, 0.55f, 0.5f, 1.0f);
@@ -34,6 +35,7 @@ public class AnimatorController : MonoBehaviour
         _animator.SetFloat("YMovement", snappedY, .1f, Time.deltaTime);
     }
 
+    // Used to determine the blend tree values for the player's movement
     private float SnapValues(float value, float lowerBound, float lowValue, float highValue)
     {
         if( value > 0 && value < lowerBound)

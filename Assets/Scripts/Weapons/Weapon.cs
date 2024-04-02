@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
         
     }
 
+    // Player and enemy has different collider types
+    // Handles stabbing damage
     public void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Enemy")
@@ -30,7 +32,7 @@ public class Weapon : MonoBehaviour
                 }
             }
         }
-        
+
         if(other.gameObject.tag == "Player")
         {
             if(other.GetType() == typeof(CapsuleCollider))

@@ -66,11 +66,10 @@ public class PlayerController : MonoBehaviour
 
     private PlayerAimController _playerAimController;
     
-    public Vector3 _nextPosition;
-    public Quaternion _nextRotation;
+    private Vector3 _nextPosition;
+    private Quaternion _nextRotation;
 
-    public float rotationPower = 3f;
-    public float rotationLerp = 0.5f;
+
 
     private PlayerHealth _playerHealth;
     private void Awake()
@@ -166,24 +165,8 @@ public class PlayerController : MonoBehaviour
         _followTarget.transform.rotation *= Quaternion.AngleAxis(_look.x * _cameraRotationSpeed, Vector3.up);
         _followTarget.transform.rotation *= Quaternion.AngleAxis(_look.y * _cameraRotationSpeed, Vector3.right);
 
-        Vector3 angles = _followTarget.transform.localEulerAngles;
-        angles.z = 0;
-
-        float angle = _followTarget.transform.localEulerAngles.x;
-
-        //Clamp the Up/Down rotation
-        if (angle > 180 && angle < 340)
-        {
-            angles.x = 340;
-        }
-        else if(angle < 180 && angle > 40)
-        {
-            angles.x = 40;
-        }
-
-
+        Vector3 angles = ClampCameraRotation();
         _followTarget.transform.localEulerAngles = angles;
-
         _nextRotation = Quaternion.Lerp(_followTarget.transform.rotation, _nextRotation, Time.deltaTime * _rotationSpeed);
 
         float moveSpeed = _walkSpeed / 100f;
@@ -198,6 +181,7 @@ public class PlayerController : MonoBehaviour
             {
                 //Set the player rotation based on the look transform
                 transform.rotation = Quaternion.Euler(0, _followTarget.transform.rotation.eulerAngles.y, 0);
+
                 //reset the y rotation of the look transform
                 _followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
             }
@@ -207,8 +191,29 @@ public class PlayerController : MonoBehaviour
 
         //Set the player rotation based on the look transform
         transform.rotation = Quaternion.Euler(0, _followTarget.transform.rotation.eulerAngles.y, 0);
+
         //Reset the y rotation of the look transform
         _followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+    }
+
+    private Vector3 ClampCameraRotation()
+    {
+        Vector3 angles = _followTarget.transform.localEulerAngles;
+        angles.z = 0;
+
+        float angle = _followTarget.transform.localEulerAngles.x;
+
+        // Clamp the Up/Down rotation
+        if (angle > 180 && angle < 340)
+        {
+            angles.x = 340;
+        }
+        else if(angle < 180 && angle > 40)
+        {
+            angles.x = 40;
+        }
+
+        return angles;
     }
 
     public void HandleMovementInput(Vector2 movementInput)
@@ -234,10 +239,12 @@ public class PlayerController : MonoBehaviour
         if(_isGrounded && !_isJumping && !_isCrouching && !_isAiming && !_isThrowing && !_isStabbing)
         {
             _isJumping = true;
+            _isGrounded = false;
+
             Vector3 velocity = _rigidbody.velocity;
             velocity.y = _jumpForce;
             _rigidbody.velocity = velocity;
-            _isGrounded = false;
+
             _animatorController.SetTrigger("Jump");
             _animatorController.SetAnimationParameter("IsGrounded", false);
         }
@@ -279,6 +286,7 @@ public class PlayerController : MonoBehaviour
 
     private void PerformThrow()
     {
+        //Instantiate the projectile and throw it
         GameObject projectile = Instantiate(_currentProjectile, _projectileSpawnPoint.transform.position, _currentProjectile.transform.rotation);
         Projectile projectileScript = projectile.GetComponent<Projectile>(); 
         projectileScript.Throw(_projectileSpawnPoint.transform);
@@ -287,6 +295,7 @@ public class PlayerController : MonoBehaviour
     private void ResetThrowing()
     {
         _isThrowing = false;
+
         _animatorController.SetAnimationParameter("IsThrowing", false);
         _animatorController.UpdateMovementValues(0, 0, false); 
         _playerAimController.StopAiming();
@@ -303,11 +312,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Called from the animation event from the player's stab animation
     private void Attack()
     {
         _stabCollider.SetActive(true);
     }
 
+    // Called from the animation event from the player's stab animation
     private void FinishAttack()
     {
         _animatorController.ResetTrigger("Stab");
@@ -316,6 +327,7 @@ public class PlayerController : MonoBehaviour
         _isDetected = false;
     }
 
+    // Handle ground detection
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
@@ -333,11 +345,11 @@ public class PlayerController : MonoBehaviour
             if(other.gameObject.tag == "Enemy" && !_isDetected)
             {
                 _allowStabbing = true;
-
             }
         }
     }
 
+    // Handle ground detection
     private void OnTriggerExit(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))

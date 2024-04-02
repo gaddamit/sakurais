@@ -37,12 +37,14 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+     // Players health will decrease by the amount of damage that is applied to the player. 
     public void ApplyDamage(float damage)
     {
-        _health -= damage; // Players health will decrease by the amount of damage that is applied to the player. 
-        CheckForDeath(); // Check if the player has died.
+        _health -= damage;
+        CheckForDeath();
     }
 
+    // If the players health goes below or equal to 0, then the player will die.
     private void CheckForDeath()
     {
         if (!_isDead && _health <= 0)

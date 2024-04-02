@@ -219,8 +219,9 @@ public class AIController : MonoBehaviour
 
     private void StartAttack()
     {
-        _state = AIState.ATTACK;
         StopMovement();
+
+        _state = AIState.ATTACK;
         transform.LookAt(_targetObject.transform);
         _animator?.SetTrigger("Stab");
     }

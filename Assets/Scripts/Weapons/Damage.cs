@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
-
     public PlayerHealth pHealth;
     [SerializeField]
     private float _damage;
@@ -14,6 +13,7 @@ public class Damage : MonoBehaviour
         get { return _damage; }
         set { _damage = value; }
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,11 +26,12 @@ public class Damage : MonoBehaviour
         
     }
 
+    // Applay damage to gameObject's playerHealth script
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player"))// If the player hits the object he will take damage. Player's tag HAS to be "Player"
+        if (other.gameObject.CompareTag("Player"))
         {
-            pHealth.ApplyDamage(_damage);// Player will take damage to whatever value we want to set it as. 
+            pHealth.ApplyDamage(_damage);
         }
     }
 }

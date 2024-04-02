@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// This script is responsible for handling the player's level, such as climbing stairs
 public class PlayerLevelController : MonoBehaviour
 {
     private Rigidbody _rigidbody;

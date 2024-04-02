@@ -16,6 +16,7 @@ public class NinjaStar : Projectile
 
     private void Update()
     {
+        // Animate the ninja star
         transform.Rotate(_rotationDirection, 100 * _rotationSpeed * Time.deltaTime);
     }
 
