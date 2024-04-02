@@ -39,14 +39,15 @@ public class Projectile : MonoBehaviour
         {
             if(other.GetType() == typeof(CapsuleCollider))
             {
-                AIController aIController = other.gameObject.GetComponentInParent<AIController>();
-                aIController?.TakeDamage();
+                PlayerHealth playerHealth = other.gameObject.GetComponentInParent<PlayerHealth>();
+                Damage damage = gameObject.GetComponent<Damage>();
+                playerHealth.ApplyDamage(damage.DamageAmount);
                 Despawn();
             }
         }
         else
         {
-            if(!other.CompareTag("Player"))
+            if(!other.CompareTag("Player") && !other.CompareTag("Weapon"))
             {
                 Despawn();
             }
