@@ -17,7 +17,13 @@ enum AIState
 public class AIController : MonoBehaviour
 {
     [SerializeField]
-    private GameObject _targetObject;
+    private PlayerController _targetObject;
+    public PlayerController TargetObject
+    {
+        get { return _targetObject; }
+        set { _targetObject = value; }
+    }
+
     [SerializeField]
     private float _distanceToChase = 5.0f;
     [SerializeField]
@@ -52,6 +58,12 @@ public class AIController : MonoBehaviour
     PlayerHealth _playerHealth;
     [SerializeField]
     private Collider _bodyCollider;
+
+    [SerializeField]
+    private GameObject _alertObject;
+
+    [SerializeField]
+    private GameObject _stabCollider;
     private void Awake()
     {
         _state = AIState.IDLE;
@@ -66,8 +78,10 @@ public class AIController : MonoBehaviour
             }
         }
 
-        _currentPatrolPoint = 1;
+        _currentPatrolPoint = 0;
         _canPatrol = activePatrolPoints > 1;
+
+        _alertObject.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -92,6 +106,14 @@ public class AIController : MonoBehaviour
 
     private void PerformAIActions()
     {
+        if(_playerHealth.IsDead)
+        {
+            if(_state < AIState.DYING)
+            {
+                return;
+            }
+        }
+
         switch(_state)
         {
             case AIState.IDLE:
@@ -104,21 +126,22 @@ public class AIController : MonoBehaviour
                 Chase();
                 break;
             case AIState.ATTACK:
-                Attack();
+                //Attack();
                 break;
             case AIState.DYING:
-                Die();
+                Dying();
                 break;
             case AIState.DEAD:
+                Dead();
                 break;
             default:
                 break;
         }
     }
 
-    private bool IsWithinDistance()
+    private bool IsWithinDistance(float distance)
     {
-        return _navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance;
+        return _navMeshAgent.remainingDistance <= distance;
     }
 
     private void Idle()
@@ -138,19 +161,53 @@ public class AIController : MonoBehaviour
 
         _animator?.SetBool("IsWalking", true);
         SetDestination(_patrolPoints[_currentPatrolPoint]);
+        
         _state = AIState.PATROL;
-
         _patrolCoroutine = null;
+    }
+
+    public void StartChasing(PlayerController playerController)
+    {
+        if(_state >= AIState.DYING || playerController.IsAlreadyDead())
+        {
+            return;
+        }
+
+        _targetObject = playerController;
+        _state = AIState.CHASE;
+        _alertObject.SetActive(true);
+
+        _animator?.SetBool("IsWalking", true);
+    }
+
+    public void StopChasing()
+    {
+        if(_state >= AIState.DYING)
+        {
+            return;
+        }
+
+        _targetObject = null;
+        _state = AIState.IDLE;
+        _alertObject.SetActive(false);
+
+        _animator?.SetBool("IsWalking", false);
+        StopMovement();
     }
 
     private void Chase()
     {
-        SetDestination(_targetObject);
+        SetDestination(_targetObject.gameObject);
+        if(IsWithinDistance(1) && !_navMeshAgent.pathPending)
+        {
+            _animator?.SetBool("IsWalking", false);
+            StartAttack();
+        }
     }
 
     private void Patrol()
     {
-        if(IsWithinDistance() && !_navMeshAgent.pathPending)
+        if(IsWithinDistance(_navMeshAgent.stoppingDistance) && !_navMeshAgent.pathPending)
         {
             _currentPatrolPoint++;
             _currentPatrolPoint %= _patrolPoints.Length;
@@ -160,25 +217,46 @@ public class AIController : MonoBehaviour
         }
     }
 
-    private void Attack()
+    private void StartAttack()
     {
-
+        _state = AIState.ATTACK;
+        StopMovement();
+        transform.LookAt(_targetObject.transform);
+        _animator?.SetTrigger("Stab");
     }
 
-    private void Die()
+    private void Attack()
     {
-        _bodyCollider.enabled = false;
-        StopMovement();
-        Invoke("HideEnemy", _deathAnimationTime);
+        _stabCollider.SetActive(true);
+    }
+
+    private void FinishAttack()
+    {
+        _stabCollider.SetActive(false);
+
+        if(_targetObject == null || _targetObject && _targetObject.IsAlreadyDead())
+        {
+            StopChasing();
+        }
+        else
+        {
+            StartChasing(_targetObject);
+        }
+    }
+
+    private void Dying()
+    {
     }
 
     private void SetDestination(GameObject destinationObject)
     {
+        _navMeshAgent.isStopped = false;
         _navMeshAgent.destination = destinationObject.transform.position;
     }
 
     private void StopMovement()
     {
+        _navMeshAgent.SetDestination(transform.position);
         _navMeshAgent.isStopped = true;
     }
 
@@ -189,18 +267,23 @@ public class AIController : MonoBehaviour
 
     private void StartDeath()
     {
-        Debug.Log("Start death");
         _animator.SetTrigger("Dying");
         _state = AIState.DYING;
+
+        _bodyCollider.enabled = false;
+        StopMovement();
+        Invoke("Dead", _deathAnimationTime);
     }
 
-    private void HideEnemy()
+    private void Dead()
     {   
+        _state = AIState.DEAD;
         transform.parent.gameObject.SetActive(false);
+        Destroy(transform.parent.gameObject);
     }
 
-    public void OnTriggerEnter(Collider other)
+    public bool IsAlreadyDead()
     {
-        
+        return _playerHealth.IsDead;
     }
 }

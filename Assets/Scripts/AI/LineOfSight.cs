@@ -64,8 +64,13 @@ public class LineOfSight : MonoBehaviour
             {
                 if(_target)
                 {
-                PlayerController playerController = _target.GetComponent<PlayerController>();
-                playerController.IsDetected = false;
+                    PlayerController playerController = _target.GetComponent<PlayerController>();
+                    playerController.IsDetected = false;
+
+
+                    AIController aiController = this.GetComponent<AIController>();
+                    aiController.TargetObject = playerController;
+                    aiController.StopChasing();
                 }
             }
             else
@@ -74,6 +79,12 @@ public class LineOfSight : MonoBehaviour
                 {
                     PlayerController playerController = _target.GetComponent<PlayerController>();
                     playerController.IsDetected = true;
+
+                    AIController aiController = this.GetComponent<AIController>();
+                    if(!aiController.IsAlreadyDead())
+                    {
+                        aiController.StartChasing(playerController);
+                    }
                 }
             }
         }
@@ -87,7 +98,7 @@ public class LineOfSight : MonoBehaviour
 
         foreach ( RaycastHit hit in hits )
         {
-            if ( hit.transform.gameObject.layer == LayerMask.NameToLayer( "Cover" ) )
+            if ( hit.transform.gameObject.layer == LayerMask.NameToLayer( "Cover" ) || hit.transform.gameObject.layer == LayerMask.NameToLayer( "Ground" ) )
             {
                 float cover_distance = Vector3.Distance( this.transform.position, hit.point );
 

@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public Vector2 _look;
 
     [Header("Flags")]
+    private bool _allowAiming = false;
     private bool _isAiming = false;
     private bool _isThrowing = false;
     private bool _isCrouching = false;
@@ -28,8 +29,11 @@ public class PlayerController : MonoBehaviour
     private bool _isJumping = false;
     private bool _isSprinting = false;
     private bool _isDetected = false;
-    private bool _isStrangling = false;
-    private bool _allowStrangling = false;
+    private bool _isStabbing = false;
+    private bool _allowStabbing = false;
+
+    [SerializeField]
+    private GameObject _stabCollider;
     public bool IsDetected
     {
         get { return _isDetected; }
@@ -62,12 +66,13 @@ public class PlayerController : MonoBehaviour
 
     private PlayerAimController _playerAimController;
     
-    public Vector3 nextPosition;
-    public Quaternion nextRotation;
+    public Vector3 _nextPosition;
+    public Quaternion _nextRotation;
 
     public float rotationPower = 3f;
     public float rotationLerp = 0.5f;
 
+    private PlayerHealth _playerHealth;
     private void Awake()
     {
         _animatorController = GetComponent<AnimatorController>();
@@ -81,7 +86,15 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        
+        _playerHealth = GetComponent<PlayerHealth>();
+        _playerHealth.onPlayerDeathDelegate += StartDeath;
+
+        Invoke("AllowInput", 1.0f);
+    }
+
+    private void AllowInput()
+    {
+        _allowAiming = true;
     }
 
     private void Update()
@@ -97,8 +110,10 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        if(_isAiming || _isThrowing || _isStrangling)
+        if(_isAiming || _isThrowing || _isStabbing || _playerHealth.IsDead) 
         {
+            _xMovement = 0;
+            _yMovement = 0;
             return;
         }
 
@@ -135,7 +150,7 @@ public class PlayerController : MonoBehaviour
             targetDirection = transform.forward;
             
         Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _cameraRotationSpeed * Time.deltaTime);
+        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
         transform.rotation = playerRotation;
         //_followTarget.transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
@@ -169,16 +184,15 @@ public class PlayerController : MonoBehaviour
 
         _followTarget.transform.localEulerAngles = angles;
 
-        nextRotation = Quaternion.Lerp(_followTarget.transform.rotation, nextRotation, Time.deltaTime * rotationLerp);
+        _nextRotation = Quaternion.Lerp(_followTarget.transform.rotation, _nextRotation, Time.deltaTime * _rotationSpeed);
 
         float moveSpeed = _walkSpeed / 100f;
         Vector3 position = (transform.forward * _move.y * moveSpeed) + (transform.right * _move.x * moveSpeed);
-        nextPosition = transform.position + position;        
+        //_nextPosition = transform.position + position;        
         
-
-        if (_move.x == 0 && _move.y == 0) 
+        if (_move == Vector2.zero) 
         {   
-            nextPosition = transform.position;
+            //_nextPosition = transform.position;
 
             if (_isAiming)
             {
@@ -193,13 +207,17 @@ public class PlayerController : MonoBehaviour
 
         //Set the player rotation based on the look transform
         transform.rotation = Quaternion.Euler(0, _followTarget.transform.rotation.eulerAngles.y, 0);
-        //reset the y rotation of the look transform
+        //Reset the y rotation of the look transform
         _followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
-        return;
     }
 
     public void HandleMovementInput(Vector2 movementInput)
     {
+        if(_isAiming || _isThrowing || _isStabbing || _playerHealth.IsDead) 
+        {
+            return;
+        }
+
         _xMovement = movementInput.x;
         _yMovement = movementInput.y;
         
@@ -208,12 +226,12 @@ public class PlayerController : MonoBehaviour
 
     public void HandleSprintInput(bool sprinting)
     {
-        _isSprinting = sprinting;
+        _isSprinting = sprinting && _movementAmount > 0.5f;
     }
 
     public void HandleJumpInput()
     {
-        if(_isGrounded && !_isJumping && !_isCrouching && !_isAiming && !_isThrowing && !_isStrangling)
+        if(_isGrounded && !_isJumping && !_isCrouching && !_isAiming && !_isThrowing && !_isStabbing)
         {
             _isJumping = true;
             Vector3 velocity = _rigidbody.velocity;
@@ -227,8 +245,15 @@ public class PlayerController : MonoBehaviour
 
     public void HandleThrowInput(bool aiming)
     {
+        if(!_allowAiming)
+        {
+            return;
+        }
+
         if(!_isCrouching && !_isAiming && !_isThrowing)
         {
+            _rigidbody.velocity = Vector3.zero;
+
             _isAiming = true;
             _animatorController.SetAnimationParameter("IsAiming", _isAiming);
             _playerAimController.StartAiming();
@@ -263,33 +288,38 @@ public class PlayerController : MonoBehaviour
     {
         _isThrowing = false;
         _animatorController.SetAnimationParameter("IsThrowing", false);
+        _animatorController.UpdateMovementValues(0, 0, false); 
         _playerAimController.StopAiming();
     }
 
-    public void HandleSneakInput()
+    public void HandleStabInput()
     {
-        if(_allowStrangling)
+        if(!_isStabbing && !_isJumping && !_isAiming && !_isThrowing)
         {
-            _isStrangling = true;
-            _animatorController.SetAnimationParameter("IsSneaking", true);
-            _allowStrangling = false;
-            Invoke("ResetStrangle", 5f);
+            _rigidbody.velocity = Vector3.zero;
+            _isStabbing = true;
+            _animatorController.SetTrigger("Stab");
+            _allowStabbing = false;
         }
     }
 
-    private void ResetStrangle()
+    private void Attack()
     {
-        _animatorController.SetAnimationParameter("IsSneaking", false);
-        _isStrangling = false;
+        _stabCollider.SetActive(true);
+    }
+
+    private void FinishAttack()
+    {
+        _animatorController.ResetTrigger("Stab");
+        _stabCollider.SetActive(false);
+        _isStabbing = false;
         _isDetected = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("test");
         if(other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
-            Debug.Log("Grounded");
             _isGrounded = true;
             _isJumping = false;
             _animatorController.SetAnimationParameter("IsGrounded", true);
@@ -302,7 +332,8 @@ public class PlayerController : MonoBehaviour
         {
             if(other.gameObject.tag == "Enemy" && !_isDetected)
             {
-                _allowStrangling = true;
+                _allowStabbing = true;
+
             }
         }
     }
@@ -315,7 +346,19 @@ public class PlayerController : MonoBehaviour
         }
         if(other.gameObject.tag == "Enemy")
         {
-            _allowStrangling = false;
+            _allowStabbing = false;
         }
+    }
+
+    private void StartDeath()
+    {
+        _animatorController.SetTrigger("Dying");
+        _rigidbody.isKinematic = true;
+        _rigidbody.velocity = Vector3.zero;
+    }
+
+    public bool IsAlreadyDead()
+    {
+        return _playerHealth.IsDead;
     }
 }

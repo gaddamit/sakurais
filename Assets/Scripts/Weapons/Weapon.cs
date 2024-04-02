@@ -30,5 +30,18 @@ public class Weapon : MonoBehaviour
                 }
             }
         }
+        
+        if(other.gameObject.tag == "Player")
+        {
+            if(other.GetType() == typeof(CapsuleCollider))
+            {
+                if(!other.isTrigger)
+                {
+                    PlayerHealth playerHealth = other.gameObject.GetComponentInParent<PlayerHealth>();
+                    Damage damage = gameObject.GetComponent<Damage>();
+                    playerHealth.ApplyDamage(damage.DamageAmount);
+                }
+            }
+        }
     }
 }
