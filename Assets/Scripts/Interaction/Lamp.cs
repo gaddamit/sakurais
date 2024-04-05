@@ -33,8 +33,7 @@ public class Lamp : MonoBehaviour
         
     }
 
-    // Turn off the light when the projectile hits the lamp
-    // Add the AIControllers to the list and increase their angle of detection
+    // Add the AIControllers to the list and increase their angle of detection if they overlap with the light source
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Enemy") && _isLightOn)
@@ -59,7 +58,7 @@ public class Lamp : MonoBehaviour
         
     }
 
-    // Remove the AIControllers from the list and reset their angle of detection
+    // Remove the AIEnemies from the list and reset their angle of detection
     public void ResetAIControllers()
     {
         foreach(AIController aiController in _aiControllers)
@@ -69,6 +68,7 @@ public class Lamp : MonoBehaviour
         _aiControllers.Clear();
     }
 
+    // Reset angle of detection of enemy if they exit the light
     private void OnTriggerExit(Collider other)
     {
         if(other.CompareTag("Enemy"))
