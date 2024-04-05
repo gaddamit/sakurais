@@ -295,8 +295,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 509979794364412691}
-  - component: {fileID: 3617996529711642164}
   - component: {fileID: 4426080107162705982}
+  - component: {fileID: 3617996529711642164}
   - component: {fileID: 8507424978743891402}
   - component: {fileID: 4425399975328182525}
   m_Layer: 0
@@ -323,6 +323,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4426080107162705982
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223034121572488318}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.6
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0.3, y: 6, z: 0.3}
 --- !u!135 &3617996529711642164
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -336,20 +350,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!136 &4426080107162705982
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1223034121572488318}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0.3, y: 6, z: 0.3}
 --- !u!114 &8507424978743891402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -392,7 +392,8 @@ GameObject:
   - component: {fileID: 4342430583850937815}
   - component: {fileID: 8589299433612384097}
   - component: {fileID: 1064745579120127212}
-  - component: {fileID: 3552929403440371660}
+  - component: {fileID: 4013674350207711196}
+  - component: {fileID: 5006292011181936062}
   m_Layer: 0
   m_Name: Lamp
   m_TagString: Untagged
@@ -467,8 +468,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3552929403440371660
-MeshCollider:
+--- !u!114 &4013674350207711196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2904943003414280204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f187713bc26c24b93db22a86fac07f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _light: {fileID: 395661574256235659}
+  _bulbLight: {fileID: 1056457890932136445}
+  _lamp: {fileID: 8507424978743891402}
+--- !u!136 &5006292011181936062
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -477,7 +493,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Radius: 0.6
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

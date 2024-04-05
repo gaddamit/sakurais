@@ -6,6 +6,12 @@ using UnityEngine.Experimental.GlobalIllumination;
 public class Lamp : MonoBehaviour
 {
     private bool _isLightOn = true;
+    public bool LightOn
+    {
+        get { return _isLightOn; }
+        set { _isLightOn = value; }
+    }
+
     [SerializeField]
     private GameObject _light;
     [SerializeField]
@@ -31,21 +37,6 @@ public class Lamp : MonoBehaviour
     // Add the AIControllers to the list and increase their angle of detection
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Projectile"))
-        {
-            if(_light != null)
-            {
-                _light.SetActive(false);
-            }
-            
-            if(_bulbLight != null)
-            {
-                _bulbLight.SetActive(false);
-            }
-            _isLightOn = false;
-            ResetAIControllers();
-        }
-
         if(other.CompareTag("Enemy") && _isLightOn)
         {
             if(other.isTrigger && other.GetType() == typeof(CapsuleCollider))
@@ -63,8 +54,13 @@ public class Lamp : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
+
     // Remove the AIControllers from the list and reset their angle of detection
-    private void ResetAIControllers()
+    public void ResetAIControllers()
     {
         foreach(AIController aiController in _aiControllers)
         {
@@ -75,7 +71,6 @@ public class Lamp : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("OnTriggerExit");
         if(other.CompareTag("Enemy"))
         {
             if(other.isTrigger && other.GetType() == typeof(CapsuleCollider))

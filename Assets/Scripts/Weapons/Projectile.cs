@@ -54,7 +54,12 @@ public class Projectile : MonoBehaviour
         else
         {
             // Despawn the projectile if it hits anything other than the player or a weapon
-            if(!other.CompareTag("Player") && !other.CompareTag("Weapon"))
+            if(other.CompareTag("Light"))
+            {
+
+            }
+                
+            else if(!other.CompareTag("Player") && !other.CompareTag("Weapon"))
             {
                 Despawn();
             }

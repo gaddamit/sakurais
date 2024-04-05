@@ -1563,6 +1563,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LampPost
       objectReference: {fileID: 0}
+    - target: {fileID: 1223034121572488318, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: m_TagString
+      value: Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
 --- !u!4 &109735139 stripped
@@ -3515,6 +3519,11 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &292614208 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 395661574256235659, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+  m_PrefabInstance: {fileID: 1219044206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &296497022
 GameObject:
   m_ObjectHideFlags: 0
@@ -7165,6 +7174,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LampPost
       objectReference: {fileID: 0}
+    - target: {fileID: 1223034121572488318, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: m_TagString
+      value: Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
 --- !u!4 &393486688 stripped
@@ -10194,6 +10207,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3043379058134534704, guid: 8a57496c469894f46ac0aa5bfe280514, type: 3}
   m_PrefabInstance: {fileID: 3043379057501036867}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &750438376 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1056457890932136445, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+  m_PrefabInstance: {fileID: 1219044206}
   m_PrefabAsset: {fileID: 0}
 --- !u!43 &751037462
 Mesh:
@@ -16256,17 +16274,53 @@ PrefabInstance:
       propertyPath: m_Name
       value: LampPost
       objectReference: {fileID: 0}
+    - target: {fileID: 1223034121572488318, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: m_TagString
+      value: Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 2904943003414280204, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: m_TagString
+      value: Light
+      objectReference: {fileID: 0}
+    - target: {fileID: 4013674350207711196, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: _lamp
+      value: 
+      objectReference: {fileID: 1219044209}
+    - target: {fileID: 4013674350207711196, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: _light
+      value: 
+      objectReference: {fileID: 292614208}
+    - target: {fileID: 4013674350207711196, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: _bulbLight
+      value: 
+      objectReference: {fileID: 750438376}
+    - target: {fileID: 5006292011181936062, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8507424978743891402, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
       propertyPath: _angleOfDetection
       value: 360
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3552929403440371660, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
 --- !u!4 &1219044207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 509979794364412691, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
   m_PrefabInstance: {fileID: 1219044206}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1219044209 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8507424978743891402, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+  m_PrefabInstance: {fileID: 1219044206}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2028f7630c1bf4200835143661399997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1219648531
 Mesh:
   m_ObjectHideFlags: 0
@@ -24313,6 +24367,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LampPost
       objectReference: {fileID: 0}
+    - target: {fileID: 1223034121572488318, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: m_TagString
+      value: Light
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
 --- !u!4 &1674247923 stripped
@@ -27554,6 +27612,10 @@ PrefabInstance:
     - target: {fileID: 1223034121572488318, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
       propertyPath: m_Name
       value: LampPost
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223034121572488318, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
+      propertyPath: m_TagString
+      value: Light
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c3aa89ba573e644829f7770fb8b1c82f, type: 3}
