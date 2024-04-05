@@ -260,14 +260,21 @@ public class AIController : MonoBehaviour
 
     private void SetDestination(GameObject destinationObject)
     {
-        _navMeshAgent.isStopped = false;
-        _navMeshAgent.destination = destinationObject.transform.position;
+        if(gameObject.GetComponent<NavMeshAgent>().enabled)
+        {
+            _navMeshAgent.isStopped = false;
+            _navMeshAgent.destination = destinationObject.transform.position;
+        }
     }
 
     private void StopMovement()
     {
-        _navMeshAgent.SetDestination(transform.position);
-        _navMeshAgent.isStopped = true;
+        if(gameObject.GetComponent<NavMeshAgent>().enabled)
+        {
+            _navMeshAgent.velocity = Vector3.zero;
+            _navMeshAgent.SetDestination(transform.position);
+            _navMeshAgent.isStopped = true;
+        }
     }
 
     public void TakeDamage()
@@ -282,7 +289,8 @@ public class AIController : MonoBehaviour
 
         _alertObject.SetActive(false);
         _bodyCollider.enabled = false;
-        StopMovement();
+        gameObject.GetComponent<NavMeshAgent>().enabled = false;
+        //StopMovement();
         Invoke("Dead", _deathAnimationTime);
     }
 

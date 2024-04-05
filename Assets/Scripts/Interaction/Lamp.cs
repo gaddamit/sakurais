@@ -63,7 +63,10 @@ public class Lamp : MonoBehaviour
     {
         foreach(AIController aiController in _aiControllers)
         {
-            aiController.ResetAngleOfDetection();
+            if(aiController != null)
+            {
+                aiController.ResetAngleOfDetection();
+            }
         }
         _aiControllers.Clear();
     }
