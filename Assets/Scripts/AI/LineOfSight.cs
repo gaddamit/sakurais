@@ -3,8 +3,17 @@ using UnityEngine;
 
 public class LineOfSight : MonoBehaviour
 {
+    [Header("Detection")]
+    [SerializeField]
+    private float _defaultAngleDetection = 60.0f;
     [SerializeField]
     private float _angleDetection = 60.0f;
+    public float AngleDetection
+    {
+        get { return _angleDetection; }
+        set { _angleDetection = value; }
+    }
+
     [SerializeField]
     private GameObject _target;
     [SerializeField]
@@ -129,5 +138,11 @@ public class LineOfSight : MonoBehaviour
         };
 
         return bounding_points;
+    }
+
+    // Resets the angle of detection to the default value
+    public void ResetAngleOfDetection()
+    {
+        _angleDetection = _defaultAngleDetection;
     }
 }

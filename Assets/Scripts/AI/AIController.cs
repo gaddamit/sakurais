@@ -297,4 +297,24 @@ public class AIController : MonoBehaviour
     {
         return _playerHealth.IsDead;
     }
+
+    // Increase the angle of detection of the AI if it is undear a lamp
+    public void SetAngleOfDetection(float value)
+    {
+        LineOfSight lineOfSight = GetComponent<LineOfSight>();
+        if(lineOfSight != null)
+        {
+            lineOfSight.AngleDetection = value;
+        }
+    }
+
+    // Reset the angle of detection of the AI to the default value
+    public void ResetAngleOfDetection()
+    {
+        LineOfSight lineOfSight = GetComponent<LineOfSight>();
+        if(lineOfSight != null)
+        {
+            lineOfSight.ResetAngleOfDetection();
+        }
+    }
 }
