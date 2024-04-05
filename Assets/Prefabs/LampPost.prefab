@@ -360,6 +360,7 @@ GameObject:
   - component: {fileID: 4342430583850937815}
   - component: {fileID: 8589299433612384097}
   - component: {fileID: 1064745579120127212}
+  - component: {fileID: 3552929403440371660}
   m_Layer: 0
   m_Name: Lamp
   m_TagString: Untagged
@@ -434,3 +435,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3552929403440371660
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2904943003414280204}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}

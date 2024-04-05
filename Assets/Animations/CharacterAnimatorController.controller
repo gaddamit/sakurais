@@ -54,7 +54,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: JumpStartLandingMod
+  m_Name: JumpLand
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -68,7 +68,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 21c2b1df6173c489da71c0d66c809230, type: 2}
+  m_Motion: {fileID: 7400000, guid: 201b0fc87263b484f9d376aef42f45dd, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -145,7 +145,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4f8ac0a9c75d7419a926b1cd536e48dc, type: 2}
+  m_Motion: {fileID: -203655887218126122, guid: 067bbbda16ef24f028e5ed6fc6a974c8, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -291,7 +291,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 4fcdd97572d8a419ba149ffb43348ed3, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 3f666c674ffb44a72948389257be3b62, type: 3}
     m_Threshold: 0.75
     m_Position: {x: 0, y: -0.25}
     m_TimeScale: 1
@@ -846,7 +846,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: ca83512250a414b15a72c114eb98a1ba, type: 2}
+  m_Motion: {fileID: 7400000, guid: c0afe7a71ca924ab097abbec62747f72, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

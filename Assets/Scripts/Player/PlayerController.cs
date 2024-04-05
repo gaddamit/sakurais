@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private GameObject _followTarget;
+    [SerializeField]
+    private GameObject _aimTarget;
 
     [Header("Camera")]
     [SerializeField]
@@ -135,6 +137,7 @@ public class PlayerController : MonoBehaviour
         }
 
         moveDirection.y = _rigidbody.velocity.y;
+        //Debug.Log(moveDirection);
         _rigidbody.velocity = moveDirection;
     }
 
@@ -152,7 +155,7 @@ public class PlayerController : MonoBehaviour
         Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime);
 
         transform.rotation = playerRotation;
-        //_followTarget.transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
+        _followTarget.transform.localRotation =  Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
     public void RotateCamera(Vector2 lookInput)
@@ -162,38 +165,20 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        _followTarget.transform.rotation *= Quaternion.AngleAxis(_look.x * _cameraRotationSpeed, Vector3.up);
-        _followTarget.transform.rotation *= Quaternion.AngleAxis(_look.y * _cameraRotationSpeed, Vector3.right);
-
-        Vector3 angles = ClampCameraRotation();
-        _followTarget.transform.localEulerAngles = angles;
-        _nextRotation = Quaternion.Lerp(_followTarget.transform.rotation, _nextRotation, Time.deltaTime * _rotationSpeed);
-
-        float moveSpeed = _walkSpeed / 100f;
-        Vector3 position = (transform.forward * _move.y * moveSpeed) + (transform.right * _move.x * moveSpeed);
-        //_nextPosition = transform.position + position;        
-        
-        if (_move == Vector2.zero) 
+         if (_move == Vector2.zero) 
         {   
-            //_nextPosition = transform.position;
-
             if (_isAiming)
             {
+                 Vector3 angles = Vector3.zero;
                 //Set the player rotation based on the look transform
-                transform.rotation = Quaternion.Euler(0, _followTarget.transform.rotation.eulerAngles.y, 0);
+                transform.rotation = Camera.main.transform.rotation;
 
                 //reset the y rotation of the look transform
-                _followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+                _aimTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
             }
 
             return; 
         }
-
-        //Set the player rotation based on the look transform
-        transform.rotation = Quaternion.Euler(0, _followTarget.transform.rotation.eulerAngles.y, 0);
-
-        //Reset the y rotation of the look transform
-        _followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
     }
 
     private Vector3 ClampCameraRotation()
@@ -299,6 +284,9 @@ public class PlayerController : MonoBehaviour
         _animatorController.SetAnimationParameter("IsThrowing", false);
         _animatorController.UpdateMovementValues(0, 0, false); 
         _playerAimController.StopAiming();
+
+        //Set the player rotation based on the look transform
+        transform.rotation = Quaternion.Euler(0, _cameraTransform.eulerAngles.y, 0);
     }
 
     public void HandleStabInput()

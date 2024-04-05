@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -168,15 +166,21 @@ public class AIController : MonoBehaviour
 
     public void StartChasing(PlayerController playerController)
     {
-        if(_state >= AIState.DYING || playerController.IsAlreadyDead())
+        if(_state >= AIState.DYING || playerController != null && playerController.IsAlreadyDead())
         {
+            StopChasing();
+            return;
+        }
+        if(Vector3.Distance(transform.position, playerController.transform.position) > _distanceToChase)
+        {
+            StopChasing();
             return;
         }
 
         _targetObject = playerController;
-        _state = AIState.CHASE;
         _alertObject.SetActive(true);
-
+    
+        _state = AIState.CHASE;
         _animator?.SetBool("IsWalking", true);
     }
 
@@ -197,7 +201,11 @@ public class AIController : MonoBehaviour
 
     private void Chase()
     {
-        SetDestination(_targetObject.gameObject);
+        if(_targetObject != null)
+        {
+            SetDestination(_targetObject.gameObject);
+        }
+        
         if(IsWithinDistance(1) && !_navMeshAgent.pathPending)
         {
             _animator?.SetBool("IsWalking", false);
@@ -245,6 +253,7 @@ public class AIController : MonoBehaviour
         }
     }
 
+
     private void Dying()
     {
     }
@@ -271,6 +280,7 @@ public class AIController : MonoBehaviour
         _animator.SetTrigger("Dying");
         _state = AIState.DYING;
 
+        _alertObject.SetActive(false);
         _bodyCollider.enabled = false;
         StopMovement();
         Invoke("Dead", _deathAnimationTime);

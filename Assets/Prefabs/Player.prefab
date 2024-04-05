@@ -601,11 +601,8 @@ MonoBehaviour:
   _currentProjectile: {fileID: 2137139717624334454, guid: b60f624b5672fe04388f9146a8c42af8, type: 3}
   _projectileSpawnPoint: {fileID: 3043379056528500772}
   _followTarget: {fileID: 3043379058134534705}
+  _aimTarget: {fileID: 0}
   _cameraRotationSpeed: 1
-  nextPosition: {x: 0, y: 0, z: 0}
-  nextRotation: {x: 0, y: 0, z: 0, w: 0}
-  rotationPower: 3
-  rotationLerp: 0.5
 --- !u!114 &1707301805223683492
 MonoBehaviour:
   m_ObjectHideFlags: 0
