@@ -169,12 +169,8 @@ public class PlayerController : MonoBehaviour
         {   
             if (_isAiming)
             {
-                 Vector3 angles = Vector3.zero;
                 //Set the player rotation based on the look transform
                 transform.rotation = Camera.main.transform.rotation;
-
-                //reset the y rotation of the look transform
-                _aimTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
             }
 
             return; 

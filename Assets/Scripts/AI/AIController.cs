@@ -260,7 +260,7 @@ public class AIController : MonoBehaviour
 
     private void SetDestination(GameObject destinationObject)
     {
-        if(gameObject.GetComponent<NavMeshAgent>().enabled)
+        if(_navMeshAgent.enabled)
         {
             _navMeshAgent.isStopped = false;
             _navMeshAgent.destination = destinationObject.transform.position;
@@ -269,7 +269,7 @@ public class AIController : MonoBehaviour
 
     private void StopMovement()
     {
-        if(gameObject.GetComponent<NavMeshAgent>().enabled)
+        if(_navMeshAgent.enabled)
         {
             _navMeshAgent.velocity = Vector3.zero;
             _navMeshAgent.SetDestination(transform.position);
@@ -284,13 +284,14 @@ public class AIController : MonoBehaviour
 
     private void StartDeath()
     {
-        _animator.SetTrigger("Dying");
         _state = AIState.DYING;
+        _animator.SetTrigger("Dying");
 
         _alertObject.SetActive(false);
         _bodyCollider.enabled = false;
-        gameObject.GetComponent<NavMeshAgent>().enabled = false;
-        //StopMovement();
+        
+        _navMeshAgent.enabled = false;
+        
         Invoke("Dead", _deathAnimationTime);
     }
 

@@ -24,10 +24,10 @@ public class PlayerAimController : MonoBehaviour
     {
         if(_isAiming && !_cameraAiming.activeInHierarchy)
         {
-             _cameraDefault.SetActive(false);
-        _cameraAiming.SetActive(true);
-        
-        StartCoroutine(ShowCrossHair(true));
+            _cameraDefault.SetActive(false);
+            _cameraAiming.SetActive(true);
+
+            StartCoroutine(ShowCrossHair(true));
         }
         else if(!_isAiming && !_cameraDefault.activeInHierarchy)
         {
@@ -41,6 +41,8 @@ public class PlayerAimController : MonoBehaviour
     // Switch to aiming camera
     public void StartAiming()
     {
+        _cameraAiming.transform.position = Camera.main.transform.position;
+        _cameraAiming.transform.rotation = Camera.main.transform.rotation;
         _isAiming = true;
     }
 
