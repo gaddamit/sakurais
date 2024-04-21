@@ -52,6 +52,7 @@ public class PlayerLevelController : MonoBehaviour
     //If the lower ray hits something and the upper ray doesn't, the player is allowed to step up
     private void HandleStepClimb()
     {
+        return;
         RaycastHit hitLower;
         if(_debugStepClimbRays)
         {

@@ -26,9 +26,10 @@ public class Damage : MonoBehaviour
         
     }
 
-    // Applay damage to gameObject's playerHealth script
+    // Apply damage to gameObject's playerHealth script
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log("Collision detected");
         if (other.gameObject.CompareTag("Player"))
         {
             pHealth.ApplyDamage(_damage);

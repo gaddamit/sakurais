@@ -43,6 +43,7 @@ public class Projectile : MonoBehaviour
         {
             if(other.GetType() == typeof(CapsuleCollider))
             {
+
                 //Apply damage to the receiving object
                 PlayerHealth playerHealth = other.gameObject.GetComponentInParent<PlayerHealth>();
                 Damage damage = gameObject.GetComponent<Damage>();
@@ -56,11 +57,11 @@ public class Projectile : MonoBehaviour
             // Despawn the projectile if it hits anything other than the player or a weapon
             if(other.CompareTag("Light"))
             {
-
-            }
                 
+            }
             else if(!other.CompareTag("Player") && !other.CompareTag("Weapon"))
             {
+                Debug.Log("Projectile hit light");
                 Despawn();
             }
         }

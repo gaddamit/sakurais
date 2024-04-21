@@ -403,6 +403,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46a6cf28c8d148fb981e0a3be9fe2a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultAngleDetection: 60
   _angleDetection: 60
   _target: {fileID: 0}
   _detectionDelay: 0.5

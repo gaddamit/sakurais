@@ -25,7 +25,6 @@ public class LampLight : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("OnTriggerEnter LampLight");
         if (other.CompareTag("Projectile"))
         {
             if(_light != null)
