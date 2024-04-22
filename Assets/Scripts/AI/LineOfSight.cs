@@ -5,9 +5,9 @@ public class LineOfSight : MonoBehaviour
 {
     [Header("Detection")]
     [SerializeField]
-    private float _defaultAngleDetection = 60.0f;
+    private float _defaultAngleDetection = 90.0f;
     [SerializeField]
-    private float _angleDetection = 60.0f;
+    private float _angleDetection = 90.0f;
     public float AngleDetection
     {
         get { return _angleDetection; }
