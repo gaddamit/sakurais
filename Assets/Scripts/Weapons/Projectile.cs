@@ -61,7 +61,6 @@ public class Projectile : MonoBehaviour
             }
             else if(!other.CompareTag("Player") && !other.CompareTag("Weapon"))
             {
-                Debug.Log("Projectile hit light");
                 Despawn();
             }
         }
