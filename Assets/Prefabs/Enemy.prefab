@@ -346,10 +346,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 1.2, z: 0}
 --- !u!136 &5242007859407679419
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -403,8 +403,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f46a6cf28c8d148fb981e0a3be9fe2a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultAngleDetection: 60
-  _angleDetection: 60
+  _defaultAngleDetection: 90
+  _angleDetection: 90
   _target: {fileID: 0}
   _detectionDelay: 0.5
 --- !u!114 &6878997860754790755

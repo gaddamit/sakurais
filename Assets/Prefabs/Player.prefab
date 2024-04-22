@@ -705,6 +705,9 @@ MonoBehaviour:
   _stepHeight: 0.3
   _stepSmooth: 0.01
   _debugStepClimbRays: 1
+  _minGroundNormalY: 0.65
+  _maxDistanceToCastRay: 1
+  _groundingDamper: 0.5
 --- !u!114 &8746490296191243758
 MonoBehaviour:
   m_ObjectHideFlags: 0
