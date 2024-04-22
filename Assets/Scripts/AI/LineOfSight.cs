@@ -24,6 +24,10 @@ public class LineOfSight : MonoBehaviour
     private Bounds _playerBounds;
     private Coroutine _detectPlayerCoroutine;
 
+    private Coroutine _engageCoroutine;
+    [SerializeField]
+    private float _engageTime = 5.0f;
+
     private void Awake()
     {
         _detectionCollider = this.GetComponent<SphereCollider>();
@@ -144,5 +148,21 @@ public class LineOfSight : MonoBehaviour
     public void ResetAngleOfDetection()
     {
         _angleDetection = _defaultAngleDetection;
+    }
+
+    public void StartEngage()
+    {
+        _angleDetection = 360.0f;
+        
+        if ( _engageCoroutine != null )
+            StopCoroutine( _engageCoroutine );
+
+        _engageCoroutine = StartCoroutine( EndEngage() );
+    }
+
+    IEnumerator EndEngage()
+    {
+        yield return new WaitForSeconds( _engageTime );
+        ResetAngleOfDetection();
     }
 }

@@ -326,4 +326,16 @@ public class AIController : MonoBehaviour
             lineOfSight.ResetAngleOfDetection();
         }
     }
+
+    public void ApplyDamage(GameObject owner, float damage)
+    {
+        PlayerController playerController = owner.GetComponent<PlayerController>();
+        if(playerController != null)
+        {
+            LineOfSight lineOfSight = gameObject.GetComponent<LineOfSight>();
+            lineOfSight.StartEngage();
+        }
+
+        _playerHealth.ApplyDamage(damage);
+    }
 }

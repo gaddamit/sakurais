@@ -686,6 +686,8 @@ MonoBehaviour:
   _crossHair: {fileID: 0}
   _cameraDefault: {fileID: 0}
   _cameraAiming: {fileID: 0}
+  _aimDistance: 100
+  _showAimRay: 0
 --- !u!114 &1409071673916437803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,8 +722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dab4dee923432488ab023032ccb911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
-  _maxHealth: 100
+  _health: 200
+  _maxHealth: 200
   _healthBar: {fileID: 0}
 --- !u!1 &2330321860763948838
 GameObject:

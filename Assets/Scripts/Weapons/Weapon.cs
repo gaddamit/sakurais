@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject _owner;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,9 +29,9 @@ public class Weapon : MonoBehaviour
             {
                 if(other.isTrigger)
                 {
-                    PlayerHealth playerHealth = other.gameObject.GetComponentInParent<PlayerHealth>();
+                    AIController aiController = other.gameObject.GetComponent<AIController>();
                     Damage damage = gameObject.GetComponent<Damage>();
-                    playerHealth.ApplyDamage(damage.DamageAmount);
+                    aiController.ApplyDamage(_owner, damage.DamageAmount);
                 }
             }
         }
