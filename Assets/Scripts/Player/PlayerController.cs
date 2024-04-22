@@ -26,6 +26,11 @@ public class PlayerController : MonoBehaviour
     private bool _isThrowing = false;
     private bool _isCrouching = false;
     private bool _isGrounded = true;
+    public bool IsGrounded
+    {
+        get { return _isGrounded; }
+    }
+
     private bool _isJumping = false;
     private bool _isSprinting = false;
     private bool _isDetected = false;
@@ -71,9 +76,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 _nextPosition;
     private Quaternion _nextRotation;
 
-
-
     private PlayerHealth _playerHealth;
+
     private void Awake()
     {
         _animatorController = GetComponent<AnimatorController>();
@@ -137,7 +141,6 @@ public class PlayerController : MonoBehaviour
         }
 
         moveDirection.y = _rigidbody.velocity.y;
-        //Debug.Log(moveDirection);
         _rigidbody.velocity = moveDirection;
     }
 
@@ -176,6 +179,7 @@ public class PlayerController : MonoBehaviour
             return; 
         }
     }
+
 
     private Vector3 ClampCameraRotation()
     {
