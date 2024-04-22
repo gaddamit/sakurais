@@ -22,7 +22,7 @@ public class PlayerLevelController : MonoBehaviour
     private float _stepSmooth = 0.01f;
     [SerializeField]
     private bool _debugStepClimbRays = true;
-    
+
     [Header("Grounding")]
     [SerializeField]
     private float _minGroundNormalY = 0.65f;
@@ -115,7 +115,6 @@ public class PlayerLevelController : MonoBehaviour
     //If the lower ray hits something and the upper ray doesn't, the player is allowed to step up
     private void HandleStepClimb()
     {
-        return;
         RaycastHit hitLower;
         if(_debugStepClimbRays)
         {
