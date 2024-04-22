@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class PlayerAimController : MonoBehaviour
@@ -10,13 +11,22 @@ public class PlayerAimController : MonoBehaviour
     private GameObject _cameraDefault;
     [SerializeField]
     private GameObject _cameraAiming;
+    [SerializeField]
+    private float _aimDistance = 100f;
+    [SerializeField]
+    private bool _showAimRay = true;
     private bool _adjustCamera = false;
     private bool _isAiming = false;
+    private Camera _camera;
+    private CinemachineFreeLook _cmAiming;
+    private Transform _originalLookAt;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        _camera = Camera.main;
+        _cmAiming = _cameraAiming.GetComponent<CinemachineFreeLook>();
+        _originalLookAt = _cmAiming.m_LookAt;
     }
 
     // Update is called once per frame
@@ -36,6 +46,8 @@ public class PlayerAimController : MonoBehaviour
         
             StartCoroutine(ShowCrossHair(false));
         }
+
+        HandleAutoAim();
     }
 
     // Switch to aiming camera
@@ -50,6 +62,30 @@ public class PlayerAimController : MonoBehaviour
     public void StopAiming()
     {
         _isAiming = false;
+        _cmAiming.m_LookAt = _originalLookAt;
+    }
+
+    private void HandleAutoAim()
+    {
+        if(_isAiming && _cameraAiming.activeInHierarchy)
+        {
+            if(Physics.Raycast(_camera.transform.position, _camera.transform.forward, out RaycastHit hit, _aimDistance))
+            {
+                if(hit.collider.GetComponent<AutoAimTarget>() != null)
+                {
+                    AutoAimTarget target = hit.collider.GetComponent<AutoAimTarget>();
+                    _adjustCamera = true;
+                    Quaternion rotation = Quaternion.Lerp(_camera.transform.rotation, Quaternion.LookRotation(target.transform.position - _camera.transform.position), 1f);
+                    _camera.transform.rotation = rotation;
+                    Debug.Log("Aiming at " + target.name);
+                }
+            }
+            if(_showAimRay)
+            {
+                Color rayColor = hit.collider != null ? Color.green : Color.red;
+                Debug.DrawRay(_camera.transform.position, _camera.transform.forward * hit.distance, rayColor);
+            }
+        }
     }
 
     // Show crosshair after a delay
