@@ -703,7 +703,7 @@ MonoBehaviour:
   _stepRayLower: {fileID: 2452660445686949531}
   _stepRayLowerLength: 0.1
   _stepHeight: 0.3
-  _stepSmooth: 0.01
+  _stepSmooth: 0.025
   _debugStepClimbRays: 1
   _minGroundNormalY: 0.65
   _maxDistanceToCastRay: 1
