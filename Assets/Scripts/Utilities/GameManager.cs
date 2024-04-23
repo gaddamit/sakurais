@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SearchService;
+
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -24,6 +23,6 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadMainGame()
     {
-        Scene.Load("GameScene");
+        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
     }
 }
