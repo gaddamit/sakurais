@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9cdd2205c3a4078bdb0703594b9f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 5135624915094406525}
 --- !u!1 &5441490154773021178
 GameObject:
   m_ObjectHideFlags: 0
@@ -516,7 +517,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5135624915094406525}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 4aac1f0ff1f314d13b4d6509db0ed196, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 582864c40be424cebab597e6c5684cb6, type: 3}
   m_Controller: {fileID: 9100000, guid: f06b11810814e4d379023ef4e31a9d18, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
@@ -528,21 +529,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5441490155910477871
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5135624915094406525}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32dab4dee923432488ab023032ccb911, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _health: 200
-  _maxHealth: 200
-  _healthBar: {fileID: 0}
 --- !u!195 &5441490155910477856
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -611,6 +597,22 @@ MonoBehaviour:
   _angleDetection: 100
   _target: {fileID: 0}
   _detectionDelay: 0.5
+  _engageTime: 5
+--- !u!114 &5441490155910477871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5135624915094406525}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32dab4dee923432488ab023032ccb911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 200
+  _maxHealth: 200
+  _healthBar: {fileID: 0}
 --- !u!4 &5480519050426146759 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 582864c40be424cebab597e6c5684cb6, type: 3}

@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
     [SerializeField]
-    private int _livesRemaining = 5;
     // Start is called before the first frame update
     private void Start()
     {
@@ -20,5 +20,10 @@ public class GameManager : Singleton<GameManager>
     private void FixedUpdate()
     {
         
+    }
+
+    public void LoadMainGame()
+    {
+        Scene.Load("GameScene");
     }
 }

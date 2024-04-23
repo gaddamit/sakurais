@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d9cdd2205c3a4078bdb0703594b9f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _owner: {fileID: 5262539542823782974}
 --- !u!1 &5028587863578651030
 GameObject:
   m_ObjectHideFlags: 0
@@ -485,6 +486,7 @@ MonoBehaviour:
   _angleDetection: 90
   _target: {fileID: 0}
   _detectionDelay: 0.5
+  _engageTime: 5
 --- !u!114 &5028587862829407737
 MonoBehaviour:
   m_ObjectHideFlags: 0
