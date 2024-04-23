@@ -327,6 +327,7 @@ public class AIController : MonoBehaviour
         }
     }
 
+    // Apply damage to the AI
     public void ApplyDamage(GameObject owner, float damage)
     {
         PlayerController playerController = owner.GetComponent<PlayerController>();

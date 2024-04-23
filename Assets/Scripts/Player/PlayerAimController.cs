@@ -65,6 +65,7 @@ public class PlayerAimController : MonoBehaviour
         _cmAiming.m_LookAt = _originalLookAt;
     }
 
+    //TODO: Implement auto aim
     private void HandleAutoAim()
     {
         if(_isAiming && _cameraAiming.activeInHierarchy)

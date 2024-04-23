@@ -150,16 +150,18 @@ public class LineOfSight : MonoBehaviour
         _angleDetection = _defaultAngleDetection;
     }
 
+    // Increases the angle of detection of the AI
     public void StartEngage()
     {
         _angleDetection = 360.0f;
-        
+
         if ( _engageCoroutine != null )
             StopCoroutine( _engageCoroutine );
 
         _engageCoroutine = StartCoroutine( EndEngage() );
     }
 
+    // Resets the angle of detection after a certain time
     IEnumerator EndEngage()
     {
         yield return new WaitForSeconds( _engageTime );

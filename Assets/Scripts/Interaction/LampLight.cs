@@ -36,7 +36,7 @@ public class LampLight : MonoBehaviour
             {
                 _bulbLight.SetActive(false);
             }
-            //_isLightOn = false;
+            
             _lamp.LightOn = false;
             _lamp.ResetAIControllers();
         }
