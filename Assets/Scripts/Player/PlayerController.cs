@@ -23,7 +23,15 @@ public class PlayerController : MonoBehaviour
     [Header("Flags")]
     private bool _allowAiming = false;
     private bool _isAiming = false;
+    public bool IsAiming
+    {
+        get { return _isAiming; }
+    }
     private bool _isThrowing = false;
+    public bool IsThrowing
+    {
+        get { return _isThrowing; }
+    }
     private bool _isCrouching = false;
     private bool _isGrounded = true;
     public bool IsGrounded
@@ -273,7 +281,12 @@ public class PlayerController : MonoBehaviour
     {
         //Instantiate the projectile and throw it
         GameObject projectile = Instantiate(_currentProjectile, _projectileSpawnPoint.transform.position, _currentProjectile.transform.rotation);
-        Projectile projectileScript = projectile.GetComponent<Projectile>(); 
+        Projectile projectileScript = projectile.GetComponent<Projectile>();
+        if(projectileScript == null)
+        {
+            Debug.LogError("Projectile script not found on the projectile object");
+            return;
+        }
         projectileScript.Throw(_projectileSpawnPoint.transform);
     }
 

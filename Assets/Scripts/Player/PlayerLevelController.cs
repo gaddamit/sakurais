@@ -9,6 +9,8 @@ public class PlayerLevelController : MonoBehaviour
 
     [Header("Step Climb")]
     [SerializeField]
+    private bool _enableStepClimb = true;
+    [SerializeField]
     private GameObject _stepRayUpper;
     [SerializeField]
     private float _stepRayUpperLength = 0.2f;
@@ -62,9 +64,12 @@ public class PlayerLevelController : MonoBehaviour
     private void FixedUpdate()
     {
         _stepsSinceLastGrounded++;
-
-        HandleStepClimb();
         
+        if(!_playerController.IsAiming || !_playerController.IsThrowing)
+        {
+            HandleStepClimb();
+        }
+
         if(_playerController.IsGrounded || SnapToGround())
         {
             _stepsSinceLastGrounded = 0;
@@ -115,20 +120,34 @@ public class PlayerLevelController : MonoBehaviour
     //If the lower ray hits something and the upper ray doesn't, the player is allowed to step up
     private void HandleStepClimb()
     {
-        RaycastHit hitLower;
-        if(_debugStepClimbRays)
+        if(!_enableStepClimb)
         {
-            Debug.DrawRay(_stepRayLower.transform.position, transform.TransformDirection(Vector3.forward) * _stepRayLowerLength, Color.red);
-            Debug.DrawRay(_stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward) * _stepRayUpperLength, Color.red);
+            return;
         }
 
+        RaycastHit hitLower;
+
+        
         if(Physics.Raycast(_stepRayLower.transform.position, transform.TransformDirection(Vector3.forward), out hitLower, _stepRayLowerLength))
         {
             RaycastHit hitUpper;
+            Color color = Color.green;
+            
             if(!Physics.Raycast(_stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward), out hitUpper, _stepRayUpperLength))
             {
                 _rigidbody.position -= new Vector3(0, -_stepSmooth, 0);
+                color = Color.red;
             }
+
+            if(_debugStepClimbRays)
+            {
+                Debug.DrawRay(_stepRayLower.transform.position, transform.TransformDirection(Vector3.forward) * _stepRayLowerLength, Color.green);
+                Debug.DrawRay(_stepRayUpper.transform.position, transform.TransformDirection(Vector3.forward) * _stepRayUpperLength, color);
+            }
+        }
+        else if(_debugStepClimbRays)
+        {
+            Debug.DrawRay(_stepRayLower.transform.position, transform.TransformDirection(Vector3.forward) * _stepRayLowerLength, Color.red);
         }
 
         RaycastHit hitLower45;
