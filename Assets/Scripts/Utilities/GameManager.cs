@@ -23,6 +23,6 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadMainGame()
     {
-        SceneManager.LoadScene("GameScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("GameSceneFinal", LoadSceneMode.Single);
     }
 }
