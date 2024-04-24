@@ -592,15 +592,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb000900241e4487f92d7011ff5012bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 3
+  _rotationSpeed: 5
   _walkSpeed: 2.5
-  _runSpeed: 6
-  _sprintSpeed: 8
+  _runSpeed: 7
+  _sprintSpeed: 10
   _move: {x: 0, y: 0}
   _look: {x: 0, y: 0}
   _stabCollider: {fileID: 449562972859874439}
   _jumpForce: 5
-  _currentProjectile: {fileID: 2137139717624334454, guid: b60f624b5672fe04388f9146a8c42af8, type: 3}
+  _currentProjectile: {fileID: 1160868674473882, guid: b9761520b2d2c83438fad794f3d075a5, type: 3}
   _projectileSpawnPoint: {fileID: 3043379056528500772}
   _followTarget: {fileID: 3043379058134534705}
   _aimTarget: {fileID: 4139997465124846766}
@@ -637,14 +637,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977331079093198607}
   serializedVersion: 2
-  m_Mass: 3
+  m_Mass: 10
   m_Drag: 0
   m_AngularDrag: 5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &1707301805223682649
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -688,7 +688,7 @@ MonoBehaviour:
   _cameraDefault: {fileID: 0}
   _cameraAiming: {fileID: 0}
   _aimDistance: 100
-  _showAimRay: 0
+  _showAimRay: 1
 --- !u!114 &1409071673916437803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -702,15 +702,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stepRayUpper: {fileID: 7177591387604339715}
-  _stepRayUpperLength: 0.2
+  _stepRayUpperLength: 0.25
   _stepRayLower: {fileID: 2452660445686949531}
   _stepRayLowerLength: 0.1
-  _stepHeight: 0.3
+  _stepHeight: 0.5
   _stepSmooth: 0.025
   _debugStepClimbRays: 1
   _minGroundNormalY: 0.65
   _maxDistanceToCastRay: 1
-  _groundingDamper: 0.5
+  _groundingDamper: 0.25
 --- !u!114 &8746490296191243758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,8 +723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32dab4dee923432488ab023032ccb911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 100
-  _maxHealth: 100
+  _health: 200
+  _maxHealth: 200
   _healthBar: {fileID: 0}
 --- !u!1 &2330321860763948838
 GameObject:

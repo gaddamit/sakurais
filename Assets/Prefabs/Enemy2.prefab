@@ -509,7 +509,7 @@ MonoBehaviour:
   _animations:
   - Idle
   - Walk
-  _patrolWait: 3
+  _patrolWait: 5
   _patrolPoints:
   - {fileID: 5028587862641262365}
   - {fileID: 5028587863578651030}
