@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using Cinemachine;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour
@@ -29,11 +26,6 @@ public class Projectile : MonoBehaviour
     public virtual void Throw(Transform spawnLocation)
     {
         gameObject.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * _projectileSpeed;
-
-        // Add impulse to the camera as an effect
-        _impulseSource = gameObject.GetComponent<CinemachineImpulseSource>();
-        _impulseSource.GenerateImpulse(Camera.main.transform.forward);
-
         Invoke("Despawn", _projectileDeathTime);
     }
 
@@ -43,7 +35,6 @@ public class Projectile : MonoBehaviour
         {
             if(other.GetType() == typeof(CapsuleCollider))
             {
-
                 //Apply damage to the receiving object
                 PlayerHealth playerHealth = other.gameObject.GetComponentInParent<PlayerHealth>();
                 Damage damage = gameObject.GetComponent<Damage>();
