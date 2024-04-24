@@ -25,3 +25,4 @@ Environment: https://www.unrealengine.com/marketplace/en-US/product/infinity-bla
 Audio: https://assetstore.unity.com/packages/audio/music/asia-tension-bgm-136000  
 Shuriken: https://assetstore.unity.com/packages/3d/shuriken-pack-89418  
 Lantern: https://assetstore.unity.com/packages/3d/props/exterior/3d-lantern-278436  
+Skybox: https://assetstore.unity.com/packages/2d/textures-materials/sky/10-skyboxes-pack-day-night-32236  
